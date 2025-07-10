@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TH Residence - Link House Details</title>
+    <!-- Tailwind CSS CDN link -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts CDN link -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN link (corrected integrity attribute) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- AOS CSS CDN link -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS files -->
+    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="css/shophouse.css"> <!-- Reusing shophouse.css for common styles -->
+    <style>
+        /* Base styles for body */
+        body {
+            padding-top: 64px; /* Adjust this value if header height changes */
+            scroll-padding-top: 64px; /* Ensures content isn't hidden by the fixed header when scrolling to an ID */
+            overflow-x: hidden; /* Prevent horizontal scroll for the main body */
+            font-family: 'Inter', sans-serif; /* Ensure Inter font is applied */
+            background-color: #f3f4f6; /* Fallback background color */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+            z-index: 0;
+        }
+
+        /* Full page background image with blur */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('Image/MASTER PLAN.jpg'); /* Your local background image */
+            background-size: cover;
+            background-position: center;
+            filter: blur(2px); /* Maintain original blur amount */
+            z-index: -1;
+        }
+
+        /* Reusing common styles from shophouse.css for consistency */
+        .section-padding {
+            padding-top: 4rem; /* py-16 */
+            padding-bottom: 4rem; /* py-16 */
+        }
+        .image-caption {
+            font-size: 0.875rem; /* text-sm */
+            color: #6b7280; /* text-gray-600 */
+        }
+        .plan-image-container, .interior-image-container {
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow: hidden; /* Ensures image fits */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+        .plan-image-container img, .interior-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.25rem; /* rounded */
+            cursor: pointer; /* Indicate clickable */
+            transition: transform 0.2s ease-in-out; /* For hover effect */
+        }
+        .plan-image-container img:hover, .interior-image-container img:hover {
+            transform: scale(1.02); /* Slight zoom on hover */
+        }
+
+        /* Modal Styles (reused from shophouse details) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transform: scale(0.8);
+            transition: transform 0.3s ease-in-out;
+        }
+        .modal-overlay.open .modal-content {
+            transform: scale(1);
+        }
+        body.modal-open {
+            overflow: hidden;
+        }
+        .modal-nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1010;
+            transition: background-color 0.3s ease;
+        }
+        .modal-nav-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .modal-nav-button.left {
+            left: 1rem;
+        }
+        .modal-nav-button.right {
+            right: 1rem;
+        }
+        .modal-nav-button.hidden {
+            display: none;
+        }
+
+        /* Carousel specific styles (reused from shophouse details) */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 300px; /* Default for small screens */
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .carousel-container {
+                height: 400px;
+            }
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .carousel-container {
+                height: 500px;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .carousel-container {
+                height: 600px;
+            }
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        .carousel-slide {
+            flex: 0 0 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .carousel-nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-nav-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .carousel-nav-button.left {
+            left: 1rem;
+        }
+        .carousel-nav-button.right {
+            right: 1rem;
+        }
+        .carousel-indicators {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+        .carousel-indicators .indicator-dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .carousel-indicators .indicator-dot.active {
+            background-color: white;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <header class="bg-white shadow-md p-4 w-full fixed top-0 left-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800 mb-4 md:mb-0 flex items-center">
+                <!-- Company Logo -->
+                <img src="Image/profile.jpg" alt="Company Logo" class="w-8 h-8 rounded-full object-cover mr-2">
+                <a href="./" class="hover:text-blue-600 transition duration-300 ease-in-out"> TH RESIDENCE </a>
+            </div>
+
+            <!-- Hamburger Menu Button (visible on small screens) -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 hover:text-[#7E252C] focus:outline-none focus:ring-2 focus:ring-blue-500 p-2 rounded-md absolute top-4 right-4">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+
+            <nav id="main-navigation" class="hidden md:block w-full md:w-auto mt-4 md:mt-0">
+                <!-- Close button for mobile menu -->
+                <button id="mobile-menu-close-button" class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-[#7E252C] focus:outline-none focus:ring-2 focus:ring-blue-500 p-2 rounded-md">
+                    <i class="fa-solid fa-times text-2xl"></i>
+                </button>
+                <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-8 text-lg font-medium text-center md:text-left">
+                    <li>
+                        <a href="index.html" class="block text-gray-700 hover:text-[#7E252C] transition duration-300 ease-in-out rounded-md p-2 -m-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Home page</a>
+                    </li>
+                    <li>
+                        <a href="index.html#properties-section" class="block text-gray-700 hover:text-[#7E252C] transition duration-300 ease-in-out rounded-md p-2 -m-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Properties</a>
+                    </li>
+                    <li>
+                        <a href="index.html#about-us-section" class="block text-gray-700 hover:text-[#7E252C] transition duration-300 ease-in-out rounded-md p-2 -m-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">About Us</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full py-8 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+
+            <section class="rounded-lg p-6 mb-12 text-center bg-white shadow-lg">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">LINK HOUSE / ផ្ទះលីង</h1>
+                
+                <!-- Land Size and House Size (Placeholder values) -->
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-8 text-gray-700 text-lg font-medium mb-6">
+                    <span class="whitespace-nowrap">ទំហំដី | Land Size: <span class="font-bold">5m x 20m</span></span>
+                    <span class="whitespace-nowrap">ទំហំផ្ទះ | House Size: <span class="font-bold">5m x 12m</span></span>
+                </div>
+                
+                <!-- Linkhouse Main Image Carousel -->
+                <div class="carousel-container mb-8">
+                    <div id="linkhouse-carousel" class="carousel-inner">
+                        <!-- Slides will be injected by JavaScript -->
+                    </div>
+                    <!-- Carousel Navigation Buttons -->
+                    <button id="linkhouse-prev" class="carousel-nav-button left">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button id="linkhouse-next" class="carousel-nav-button right">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    <!-- Carousel Indicators -->
+                    <div id="linkhouse-indicators" class="carousel-indicators">
+                        <!-- Indicators will be injected by JavaScript -->
+                    </div>
+                </div>
+                <!-- End Linkhouse Main Image Carousel -->
+                
+                <a href="https://momento360.com/e/uc/YOUR_LINKHOUSE_3D_MODEL_ID?utm_campaign=embed&utm_source=other&size=medium&display-plan=true" target="_blank" class="inline-block bg-[#7E252C] text-white py-3 px-8 rounded-md hover:bg-red-800 transition duration-300 ease-in-out text-xl font-semibold shadow-lg mt-4">View 3D Model</a>
+            </section>
+
+            <section class="mb-12 px-4 py-16 bg-gray-50 rounded-lg shadow-inner mt-8" data-aos="fade-up" data-aos-duration="1000">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Floor Plans / ប្លង់ផ្ទះ</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="plan-image-container p-4">
+                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Ground Floor Plan" class="clickable-image" data-group="linkhouse-floorplans" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <p class="image-caption text-center mt-2">GROUND FLOOR</p>
+                    </div>
+                    <div class="plan-image-container p-4">
+                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse 1st Floor Plan" class="clickable-image" data-group="linkhouse-floorplans" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <p class="image-caption text-center mt-2">1ST FLOOR</p>
+                    </div>
+                    <div class="plan-image-container p-4">
+                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse 2nd Floor Plan" class="clickable-image" data-group="linkhouse-floorplans" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <p class="image-caption text-center mt-2">2ND FLOOR</p>
+                    </div>
+                    <div class="plan-image-container p-4">
+                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse 3rd Floor Plan" class="clickable-image" data-group="linkhouse-floorplans" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <p class="image-caption text-center mt-2">3RD FLOOR</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 text-sm text-center mt-6">
+                    <strong class="text-red-700">Note:</strong> Please replace these placeholder images with actual floor plans for the Link House.
+                </p>
+            </section>
+
+            <section class="mb-12 px-4 py-16 bg-white rounded-lg shadow-lg mt-8" data-aos="fade-up" data-aos-duration="1000">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Interior Spaces / បរិយាកាសខាងក្នុង</h2>
+                
+                <!-- Features (Bedroom, Bathroom, Storage) -->
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-x-8 gap-y-4 text-gray-700 text-lg mb-8">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-bed w-5 h-5 mr-2 text-gray-500"></i>
+                        <span>បន្ទប់គេង | Bedroom: <span class="font-bold">4</span></span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-bath w-5 h-5 mr-2 text-gray-500"></i>
+                        <span>បន្ទប់ទឹក | Bathroom: <span class="font-bold">5</span></span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-box-archive w-5 h-5 mr-2 text-gray-500"></i>
+                        <span>បន្ទប់ដាក់ឥវ៉ាន់ | Storage room: <span class="font-bold">1</span></span>
+                    </div>
+                </div>
+
+                <!-- Interior Spaces Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <div class="interior-image-container p-4">
+                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Living Room" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <p class="image-caption text-center mt-2">បន្ទប់ទទួលភ្ញៀវ | LIVINGROOM</p>
+                    </div>
+                    <div class="interior-image-container p-4">
+                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Kitchen" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <p class="image-caption text-center mt-2">ផ្ទះបាយ | KITCHEN</p>
+                    </div>
+                    <div class="interior-image-container p-4">
+                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Master Bedroom" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <p class="image-caption text-center mt-2">បន្ទប់គេងធំ | MASTER BEDROOM</p>
+                    </div>
+                    <div class="interior-image-container p-4">
+                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Office Room" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <p class="image-caption text-center mt-2">បន្ទប់ការិយាល័យ | OFFICE ROOM</p>
+                    </div>
+                    <div class="interior-image-container p-4">
+                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Party Room" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <p class="image-caption text-center mt-2">បន្ទប់ជប់លៀង | PARTY ROOM</p>
+                    </div>
+                    <div class="interior-image-container p-4">
+                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Outdoor Space" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <p class="image-caption text-center mt-2">សួនច្បារខាងក្រៅ | OUTDOOR SPACE</p>
+                    </div>
+                </div>
+
+                <p class="text-gray-600 text-sm text-center mt-6">
+                    <strong class="text-red-700">Note:</strong> Please replace these placeholder images with actual interior/exterior renders for the Link House.
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <div class="fixed bottom-4 right-4 z-40">
+        <a href="https://momento360.com/e/uc/YOUR_LINKHOUSE_3D_MODEL_ID?utm_campaign=embed&utm_source=other&size=medium&display-plan=true" target="_blank" class="bg-[#7E252C] text-white py-3 px-6 rounded-full shadow-lg hover:bg-red-800 transition duration-300 ease-in-out text-xl font-semibold flex items-center justify-center">
+            <i class="fa-solid fa-cube mr-2"></i> View 3D
+        </a>
+    </div>
+
+    <div id="image-modal" class="modal-overlay">
+        <img id="modal-image" src="" alt="Enlarged Image" class="modal-content">
+        <button id="prev-image-button" class="modal-nav-button left"><i class="fa-solid fa-chevron-left"></i></button>
+        <button id="next-image-button" class="modal-nav-button right"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <footer class="bg-gray-900 text-white py-12 px-4 mt-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center md:text-left">
+            <div>
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">About TH Residence</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                    TH Residence is committed to delivering high-quality, modern living and business spaces in prime locations across Phnom Penh. We focus on innovative design, sustainable practices, and exceptional customer service.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">Contact Us</h3>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-center md:justify-start justify-center">
+                        <i class="fa-solid fa-phone text-gray-400 mr-3"></i> 
+                        <a href="tel:+85512345678" class="text-gray-300 hover:text-white transition duration-300"> +855 12 345 678</a>
+                    </li>
+                    <li class="flex items-center md:justify-start justify-center">
+                        <i class="fa-solid fa-envelope text-gray-400 mr-3"></i> 
+                        <a href="mailto:info@thresidence.com" class="text-gray-300 hover:text-white transition duration-300">thresidence.socialmedia@gmail.com</a>
+                    </li>
+                    <li class="flex items-start md:justify-start justify-center">
+                        <i class="fa-solid fa-location-dot text-gray-400 mr-3 mt-1"></i> 
+                        <span class="text-gray-300">Project DongKoa I, Phnom Penh, Cambodia</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">Useful Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="index.html" class="footer-link">Home page</a></li>
+                    <li><a href="index.html#properties-section" class="footer-link">Properties</a></li>
+                    <li><a href="index.html#about-us-section" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Terms of Service</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Sitemap</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">Newsletter</h3>
+                <p class="text-gray-300 text-sm mb-4">Subscribe to our newsletter for the latest updates and offers.</p>
+                <form class="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
+                    <input type="email" placeholder="Your email address" class="flex-grow p-2 rounded-md bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-1 focus:ring-[#7E252C]">
+                    <button type="submit" class="bg-[#7E252C] text-white p-2 rounded-md hover:bg-red-800 transition duration-300 ease-in-out">Subscribe</button>
+                </form>
+                
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4 mt-8">Follow Us</h3>
+                <div class="flex justify-center md:justify-start space-x-6">
+                    <a href="https://www.facebook.com/THresidences" target="_blank" aria-label="Facebook" class="social-icon text-3xl">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="https://t.me/THResidence" target="_blank" aria-label="Telegram" class="social-icon text-3xl">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                    <a href="https://www.instagram.com/thresidences/" target="_blank" aria-label="Instagram" class="social-icon text-3xl">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+            &copy; <span id="current-year-footer"></span> TH Residence. All rights reserved.
+        </div>
+    </footer>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.getElementById('current-year-footer').textContent = new Date().getFullYear();
+        AOS.init(); // Initialize AOS
+
+        // --- Image Modal/Lightbox Logic with Carousel ---
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const prevButton = document.getElementById('prev-image-button');
+        const nextButton = document.getElementById('next-image-button');
+        
+        // Select all clickable images, including carousel slides and grid images
+        const clickableImages = document.querySelectorAll('.clickable-image'); 
+
+        let currentImageGroup = [];
+        let currentImageIndex = 0;
+
+        function showImageInModal(index) {
+            if (currentImageGroup.length > 0 && index >= 0 && index < currentImageGroup.length) {
+                modalImage.src = currentImageGroup[index];
+                currentImageIndex = index;
+
+                // Always show navigation buttons for modal carousel if there's more than one image
+                prevButton.classList.toggle('hidden', currentImageGroup.length <= 1);
+                nextButton.classList.toggle('hidden', currentImageGroup.length <= 1);
+            }
+        }
+
+        clickableImages.forEach(image => {
+            image.addEventListener('click', function() {
+                // Determine the group of images for the modal
+                let groupImages = [];
+                let clickedImageSrc = this.getAttribute('data-fullsrc') || this.src;
+
+                // Check if the clicked image is part of the main linkhouse carousel
+                if (this.closest('#linkhouse-carousel')) { // Changed ID to linkhouse-carousel
+                    groupImages = linkhouseImages; // Changed array name to linkhouseImages
+                } 
+                // Check if the clicked image is part of the interior spaces grid
+                else if (this.closest('.interior-image-container')) {
+                    groupImages = Array.from(document.querySelectorAll('.interior-image-container .clickable-image')).map(img => img.getAttribute('data-fullsrc') || img.src);
+                }
+                // Check if the clicked image is part of the floor plans grid
+                else if (this.closest('.plan-image-container')) {
+                    groupImages = Array.from(document.querySelectorAll('.plan-image-container .clickable-image')).map(img => img.getAttribute('data-fullsrc') || img.src);
+                }
+                else {
+                    groupImages = [clickedImageSrc]; // Single image, no specific group
+                }
+                
+                currentImageGroup = groupImages;
+                currentImageIndex = currentImageGroup.indexOf(clickedImageSrc);
+
+                if (currentImageGroup.length > 0) {
+                    showImageInModal(currentImageIndex);
+                    imageModal.classList.add('open');
+                    document.body.classList.add('modal-open'); // Add class to body to disable scrolling
+                }
+            });
+        });
+
+        // Navigation buttons event listeners for the modal
+        prevButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent modal from closing when clicking button
+            if (currentImageGroup.length > 1) { // Only navigate if more than one image
+                const prevIndex = (currentImageIndex - 1 + currentImageGroup.length) % currentImageGroup.length;
+                showImageInModal(prevIndex);
+            }
+        });
+
+        nextButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent modal from closing when clicking button
+            if (currentImageGroup.length > 1) { // Only navigate if more than one image
+                const nextIndex = (currentImageIndex + 1) % currentImageGroup.length;
+                showImageInModal(nextIndex);
+            }
+        });
+
+        // Close modal when clicking on the overlay (but not the image or buttons)
+        imageModal.addEventListener('click', function(event) {
+            if (event.target === imageModal) { // Only close if clicked directly on overlay
+                imageModal.classList.remove('open');
+                document.body.classList.remove('modal-open'); // Re-enable scrolling
+                modalImage.src = ''; // Clear image source for next time
+                currentImageGroup = []; // Clear current group
+                currentImageIndex = 0; // Reset index
+            }
+        });
+
+        // Optional: Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && imageModal.classList.contains('open')) {
+                imageModal.classList.remove('open');
+                document.body.classList.remove('modal-open');
+                modalImage.src = '';
+                currentImageGroup = [];
+                currentImageIndex = 0;
+            }
+        });
+
+        // --- Linkhouse Main Carousel Logic --- (Changed from Shophouse)
+        const linkhouseCarousel = document.getElementById('linkhouse-carousel');
+        const linkhousePrevButton = document.getElementById('linkhouse-prev');
+        const linkhouseNextButton = document.getElementById('linkhouse-next');
+        const linkhouseIndicatorsContainer = document.getElementById('linkhouse-indicators');
+
+        const linkhouseImages = [
+            "Image/LINK HOUSE_EVENING_VIEW055.jpg", // Original Linkhouse image
+            "Image/LINKHOUSE_LIVING_ROOM.jpg", // Example Linkhouse Living Room
+            "Image/LINKHOUSE_KITCHEN.jpg", // Example Linkhouse Kitchen
+            "Image/LINKHOUSE_BEDROOM.jpg" // Example Linkhouse Bedroom
+        ];
+
+        let currentLinkhouseDisplayIndex = 0; // Index in the DOM (including clones)
+        let autoPlayIntervalLinkhouse;
+
+        function initializeLinkhouseCarousel() {
+            linkhouseCarousel.innerHTML = ''; // Clear existing content
+            linkhouseIndicatorsContainer.innerHTML = ''; // Clear existing indicators
+
+            // Create slides including clones for seamless looping
+            const linkhouseCarouselSlides = [
+                linkhouseImages[linkhouseImages.length - 1], // Clone of last image
+                ...linkhouseImages, // Original images
+                linkhouseImages[0] // Clone of first image
+            ];
+
+            linkhouseCarouselSlides.forEach((src, index) => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `Linkhouse Image ${index + 1}`;
+                img.classList.add('carousel-slide', 'clickable-image'); // Add clickable-image class
+                img.setAttribute('data-fullsrc', src); // Ensure data-fullsrc is set for modal
+                linkhouseCarousel.appendChild(img);
+            });
+
+            // Create indicators for original images only
+            linkhouseImages.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('indicator-dot');
+                dot.addEventListener('click', () => { 
+                    showLinkhouseSlide(index + 1); // +1 because of the leading clone
+                    resetAutoPlayLinkhouse(); 
+                });
+                linkhouseIndicatorsContainer.appendChild(dot);
+            });
+
+            currentLinkhouseDisplayIndex = 1; // Start at the first actual image (index 1 in the display array)
+            showLinkhouseSlide(currentLinkhouseDisplayIndex, false); // Show initial slide without transition
+            startAutoPlayLinkhouse();
+        }
+
+        function showLinkhouseSlide(index, smoothTransition = true) {
+            const totalOriginalSlides = linkhouseImages.length;
+            const displaySlidesCount = totalOriginalSlides + 2; // Original + 2 clones
+
+            linkhouseCarousel.style.transition = smoothTransition ? 'transform 0.5s ease-in-out' : 'none';
+            linkhouseCarousel.style.transform = `translateX(-${index * 100}%)`;
+            currentLinkhouseDisplayIndex = index;
+
+            // Update indicators based on the *original* image index
+            let originalIndex = (index - 1 + totalOriginalSlides) % totalOriginalSlides; // Adjust for clones
+            Array.from(linkhouseIndicatorsContainer.children).forEach((dot, i) => {
+                dot.classList.toggle('active', i === originalIndex);
+            });
+
+            // Handle seamless looping after transition
+            if (index === displaySlidesCount - 1) { // If it's the cloned first image (at the end)
+                setTimeout(() => {
+                    showLinkhouseSlide(1, false); // Jump to the actual first image without transition
+                }, 500); // Match transition duration
+            } else if (index === 0) { // If it's the cloned last image (at the beginning)
+                setTimeout(() => {
+                    showLinkhouseSlide(totalOriginalSlides, false); // Jump to the actual last image without transition
+                }, 500); // Match transition duration
+            }
+        }
+
+        function nextLinkhouseSlide() {
+            showLinkhouseSlide(currentLinkhouseDisplayIndex + 1);
+            resetAutoPlayLinkhouse();
+        }
+
+        function prevLinkhouseSlide() {
+            showLinkhouseSlide(currentLinkhouseDisplayIndex - 1);
+            resetAutoPlayLinkhouse();
+        }
+
+        function startAutoPlayLinkhouse() {
+            stopAutoPlayLinkhouse(); // Clear any existing interval
+            autoPlayIntervalLinkhouse = setInterval(() => {
+                showLinkhouseSlide(currentLinkhouseDisplayIndex + 1);
+            }, 5000); // Change slide every 5 seconds
+        }
+
+        function stopAutoPlayLinkhouse() {
+            clearInterval(autoPlayIntervalLinkhouse);
+        }
+
+        function resetAutoPlayLinkhouse() {
+            stopAutoPlayLinkhouse();
+            startAutoPlayLinkhouse();
+        }
+
+        // Event listeners for carousel navigation
+        linkhouseNextButton.addEventListener('click', nextLinkhouseSlide);
+        linkhousePrevButton.addEventListener('click', prevLinkhouseSlide);
+
+        // Initialize the linkhouse carousel when the DOM is ready
+        document.addEventListener('DOMContentLoaded', initializeLinkhouseCarousel);
+
+
+        // Mobile Menu Toggle Logic (Re-added for this page's header)
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mainNavigation = document.getElementById('main-navigation');
+        const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+
+
+        if (mobileMenuButton && mainNavigation) {
+            mobileMenuButton.addEventListener('click', () => {
+                mainNavigation.classList.toggle('hidden');
+                mainNavigation.classList.toggle('flex'); // Use flex for vertical stacking when open
+                mainNavigation.classList.toggle('flex-col'); // Ensure vertical stacking
+                mainNavigation.classList.toggle('items-center'); // Center items when open
+                mainNavigation.classList.toggle('space-y-4'); // Add vertical space
+                mainNavigation.classList.toggle('fixed'); // Make it fixed
+                mainNavigation.classList.toggle('inset-0'); // Cover full screen
+                mainNavigation.classList.toggle('bg-white'); // Add background
+                mainNavigation.classList.toggle('p-8'); // Add padding
+                mainNavigation.classList.toggle('z-[60]'); // Higher z-index
+                document.body.classList.toggle('modal-open'); // Disable body scroll
+            });
+        }
+
+        if (mobileMenuCloseButton) {
+            mobileMenuCloseButton.addEventListener('click', () => {
+                mainNavigation.classList.add('hidden');
+                mainNavigation.classList.remove('flex', 'fixed', 'inset-0', 'bg-white', 'p-8', 'z-[60]');
+                document.body.classList.remove('modal-open'); // Re-enable body scroll
+            });
+        }
+    </script>
+</body>
+</html>

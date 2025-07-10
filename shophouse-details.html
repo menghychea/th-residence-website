@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TH Residence - Shophouse Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Corrected Font Awesome CDN link - changed xintegrity to integrity -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Assuming style.css contains general styles and shophouse.css specific ones -->
+    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="css/shophouse.css"> 
+    <style>
+        /* Base styles for body */
+        body {
+            padding-top: 64px; /* Adjust this value if header height changes */
+            scroll-padding-top: 64px; /* Ensures content isn't hidden by the fixed header when scrolling to an ID */
+            overflow-x: hidden; /* Prevent horizontal scroll for the main body */
+            font-family: 'Inter', sans-serif; /* Ensure Inter font is applied */
+            background-color: #f3f4f6; /* Fallback background color */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+            z-index: 0;
+        }
+
+        /* Full page background image with blur */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://placehold.co/1920x1080/E0E0E0/000000?text=Background+Image'); /* Placeholder for MASTER PLAN.jpg */
+            background-size: cover;
+            background-position: center;
+            filter: blur(2px); /* Maintain original blur amount */
+            z-index: -1;
+        }
+
+        .section-padding {
+            padding-top: 4rem; /* py-16 */
+            padding-bottom: 4rem; /* py-16 */
+        }
+         .image-caption {
+            font-size: 0.875rem; /* text-sm */
+            color: #6b7280; /* text-gray-600 */
+        }
+        /* Custom style for the floor plan and interior image containers */
+        .plan-image-container, .interior-image-container {
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow: hidden; /* Ensures image fits */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+        .plan-image-container img, .interior-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.25rem; /* rounded */
+            cursor: pointer; /* Indicate clickable */
+            transition: transform 0.2s ease-in-out; /* For hover effect */
+        }
+        .plan-image-container img:hover, .interior-image-container img:hover {
+            transform: scale(1.02); /* Slight zoom on hover */
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top of everything */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            backdrop-filter: blur(5px); /* Blurred background content */
+            -webkit-backdrop-filter: blur(5px); /* Safari support */
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain; /* Ensures the whole image is visible */
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transform: scale(0.8);
+            transition: transform 0.3s ease-in-out;
+        }
+        .modal-overlay.open .modal-content {
+            transform: scale(1);
+        }
+        /* Hide scrollbar when modal is open */
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        /* Navigation buttons for modal */
+        .modal-nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1010; /* Above modal content */
+            transition: background-color 0.3s ease;
+        }
+        .modal-nav-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .modal-nav-button.left {
+            left: 1rem;
+        }
+        .modal-nav-button.right {
+            right: 1rem;
+        }
+        .modal-nav-button.hidden {
+            display: none;
+        }
+
+        /* Carousel specific styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            /* Responsive height for carousel */
+            height: 300px; /* Default for small screens */
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .carousel-container {
+                height: 400px;
+            }
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .carousel-container {
+                height: 500px;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .carousel-container {
+                height: 600px;
+            }
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%; /* Ensure inner container takes full height */
+        }
+        .carousel-slide {
+            flex: 0 0 100%; /* Each slide takes full width of its container */
+            height: 100%;
+            object-fit: cover;
+        }
+        .carousel-nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s ease;
+            display: flex; /* Ensure icon is centered */
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-nav-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .carousel-nav-button.left {
+            left: 1rem;
+        }
+        .carousel-nav-button.right {
+            right: 1rem;
+        }
+        .carousel-indicators {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem; /* Changed space-x to gap for modern CSS */
+            z-index: 10;
+        }
+        .carousel-indicators .indicator-dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .carousel-indicators .indicator-dot.active {
+            background-color: white;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <header class="bg-white shadow-md p-4 w-full fixed top-0 left-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800 mb-4 md:mb-0 flex items-center">
+                <!-- Changed logo image source to a placeholder for reliability in Canvas -->
+                <img src="Image/profile.jpg" alt="Company Logo" class="w-8 h-8 rounded-full object-cover mr-2">
+                <a href="./" class="hover:text-blue-600 transition duration-300 ease-in-out"> TH RESIDENCE </a>
+            </div>
+
+            <!-- Hamburger Menu Button (visible on small screens) -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 hover:text-[#7E252C] focus:outline-none focus:ring-2 focus:ring-blue-500 p-2 rounded-md absolute top-4 right-4">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+
+            <nav id="main-navigation" class="hidden md:block w-full md:w-auto mt-4 md:mt-0">
+                <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-8 text-lg font-medium text-center md:text-left">
+                    <li>
+                        <a href="Test-about-us.html" class="block text-gray-700 hover:text-[#7E252C] transition duration-300 ease-in-out rounded-md p-2 -m-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Home page</a>
+                    </li>
+                    <li>
+                        <a href="index.html#properties-section" class="block text-gray-700 hover:text-[#7E252C] transition duration-300 ease-in-out rounded-md p-2 -m-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Properties</a>
+                    </li>
+                    <li>
+                        <a href="index.html#about-us-section" class="block text-gray-700 hover:text-[#7E252C] transition duration-300 ease-in-out rounded-md p-2 -m-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">About Us</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full py-8 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+
+            <section class="rounded-lg p-6 mb-12 text-center bg-white shadow-lg">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">SHOPHOUSE / ផ្ទះអាជីវកម្ម</h1>
+                
+                <!-- Land Size and House Size -->
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-8 text-gray-700 text-lg font-medium mb-6">
+                    <span class="whitespace-nowrap">ទំហំដី | Land Size: <span class="font-bold">4.5m x 20m</span></span>
+                    <span class="whitespace-nowrap">ទំហំផ្ទះ | House Size: <span class="font-bold">4.5m x 14m</span></span>
+                </div>
+                
+                <!-- Shophouse Main Image Carousel -->
+                <div class="carousel-container mb-8">
+                    <div id="shophouse-carousel" class="carousel-inner">
+                        <!-- Slides will be injected by JavaScript -->
+                    </div>
+                    <!-- Carousel Navigation Buttons -->
+                    <button id="shophouse-prev" class="carousel-nav-button left">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button id="shophouse-next" class="carousel-nav-button right">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    <!-- Carousel Indicators -->
+                    <div id="shophouse-indicators" class="carousel-indicators">
+                        <!-- Indicators will be injected by JavaScript -->
+                    </div>
+                </div>
+                <!-- End Shophouse Main Image Carousel -->
+                
+                <a href="https://momento360.com/e/uc/639996f7f2e4447eafd18d52c7c0d07e?utm_campaign=embed&utm_source=other&size=medium&display-plan=true" target="_blank" class="inline-block bg-[#7E252C] text-white py-3 px-8 rounded-md hover:bg-red-800 transition duration-300 ease-in-out text-xl font-semibold shadow-lg mt-4">View 3D Model</a>
+            </section>
+
+            <section class="mb-12 px-4 py-16 bg-gray-50 rounded-lg shadow-inner mt-8" data-aos="fade-up" data-aos-duration="1000">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Floor Plans / ប្លង់ផ្ទះ</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="plan-image-container p-4">
+                        <img src="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751857740/Screenshot_2025-07-07_at_10.07.51_AM_hbp8oz.png" alt="Shophouse Ground Floor Plan" class="clickable-image" data-group="floorplans" data-fullsrc="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751857740/Screenshot_2025-07-07_at_10.07.51_AM_hbp8oz.png">
+                        <p class="image-caption text-center mt-2">GROUND FLOOR</p>
+                    </div>
+                    <div class="plan-image-container p-4">
+                        <img src="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751857982/Screenshot_2025-07-07_at_10.11.34_AM_twbpez.png" alt="Shophouse 1st Floor Plan" class="clickable-image" data-group="floorplans" data-fullsrc="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751857982/Screenshot_2025-07-07_at_10.11.34_AM_twbpez.png">
+                        <p class="image-caption text-center mt-2">1ST FLOOR</p>
+                    </div>
+                    <div class="plan-image-container p-4">
+                        <img src="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751857998/Screenshot_2025-07-07_at_10.12.02_AM_l6zeo1.png" alt="Shophouse 2nd Floor Plan" class="clickable-image" data-group="floorplans" data-fullsrc="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751857998/Screenshot_2025-07-07_at_10.12.02_AM_l6zeo1.png">
+                        <p class="image-caption text-center mt-2">2ND FLOOR</p>
+                    </div>
+                    <div class="plan-image-container p-4">
+                        <img src="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751857981/Screenshot_2025-07-07_at_10.12.24_AM_t7fohy.png" alt="Shophouse 3rd Floor Plan" class="clickable-image" data-group="floorplans" data-fullsrc="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751857981/Screenshot_2025-07-07_at_10.12.24_AM_t7fohy.png">
+                        <p class="image-caption text-center mt-2">3RD FLOOR</p>
+                    </div>
+                </div>
+                
+            </section>
+
+            <section class="mb-12 px-4 py-16 bg-white rounded-lg shadow-lg mt-8" data-aos="fade-up" data-aos-duration="1000">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Interior Spaces / បរិយាកាសខាងក្នុង</h2>
+                
+                <!-- Features (Bedroom, Bathroom, Storage) -->
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-x-8 gap-y-4 text-gray-700 text-lg mb-8">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-bed w-5 h-5 mr-2 text-gray-500"></i>
+                        <span>បន្ទប់គេង | Bedroom: <span class="font-bold">5</span></span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-bath w-5 h-5 mr-2 text-gray-500"></i>
+                        <span>បន្ទប់ទឹក | Bathroom: <span class="font-bold">6</span></span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-box-archive w-5 h-5 mr-2 text-gray-500"></i>
+                        <span>បន្ទប់ដាក់ឥវ៉ាន់ | Storage room: <span class="font-bold">1</span></span>
+                    </div>
+                </div>
+
+                <!-- Interior Spaces Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <div class="interior-image-container p-4">
+                        <img src="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751083902/RD/shophouse/A-Living_01_f1utp8.png" alt="Living Room" class="clickable-image" data-group="interior-all" data-fullsrc="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751083902/RD/shophouse/A-Living_01_f1utp8.png">
+                        <p class="image-caption text-center mt-2">បន្ទប់ទទួលភ្ញៀវ | LIVINGROOM</p>
+                    </div>
+                    <div class="interior-image-container p-4">
+                        <img src="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751083894/RD/shophouse/A-Kitchen_Op02V02_ezfawu.png" alt="Kitchen" class="clickable-image" data-group="interior-all" data-fullsrc="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751083894/RD/shophouse/A-Kitchen_Op02V02_ezfawu.png">
+                        <p class="image-caption text-center mt-2">ផ្ទះបាយ | KITCHEN</p>
+                    </div>
+                    <div class="interior-image-container p-4">
+                        <img src="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751083896/RD/shophouse/A-Master_Bedroom_01_rake4z.png" alt="Master Bedroom" class="clickable-image" data-group="interior-all" data-fullsrc="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751083896/RD/shophouse/A-Master_Bedroom_01_rake4z.png">
+                        <p class="image-caption text-center mt-2">បន្ទប់គេងធំ | MASTER BEDROOM</p>
+                    </div>
+                    <div class="interior-image-container p-4">
+                        <img src="Image/A-Office 01.png" alt="Office Room" class="clickable-image" data-group="interior-all" data-fullsrc="Image/A-Office 01.png">
+                        <p class="image-caption text-center mt-2">បន្ទប់ការិយាល័យ | OFFICE ROOM</p>
+                    </div>
+                    <div class="interior-image-container p-4">
+                        <img src="Image/PARTTY.png" alt="Party Room" class="clickable-image" data-group="interior-all" data-fullsrc="Image/PARTTY.png">
+                        <p class="image-caption text-center mt-2">បន្ទប់ជប់លៀង | PARTY ROOM</p>
+                    </div>
+                    <div class="interior-image-container p-4">
+                        <img src="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751859054/RD/shophouse/A-Terrace_01_mwfoa1.png" alt="Outdoor Space" class="clickable-image" data-group="interior-all" data-fullsrc="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1751859054/RD/shophouse/A-Terrace_01_mwfoa1.png">
+                        <p class="image-caption text-center mt-2">សួនច្បារខាងក្រៅ | OUTDOOR SPACE</p>
+                    </div>
+                </div>
+
+               
+            </section>
+
+        </div>
+    </main>
+
+    <div class="fixed bottom-4 right-4 z-40">
+        <a href="https://momento360.com/e/uc/639996f7f2e4447eafd18d52c7c0d07e?utm_campaign=embed&utm_source=other&size=medium&display-plan=true" target="_blank" class="bg-[#7E252C] text-white py-3 px-6 rounded-full shadow-lg hover:bg-red-800 transition duration-300 ease-in-out text-xl font-semibold flex items-center justify-center">
+            <i class="fa-solid fa-cube mr-2"></i> View 3D
+        </a>
+    </div>
+
+    <div id="image-modal" class="modal-overlay">
+        <img id="modal-image" src="" alt="Enlarged Image" class="modal-content">
+        <button id="prev-image-button" class="modal-nav-button left"><i class="fa-solid fa-chevron-left"></i></button>
+        <button id="next-image-button" class="modal-nav-button right"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <footer class="bg-gray-900 text-white py-12 px-4 mt-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center md:text-left">
+            <div>
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">About TH Residence</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                    TH Residence is committed to delivering high-quality, modern living and business spaces in prime locations across Phnom Penh. We focus on innovative design, sustainable practices, and exceptional customer service.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">Contact Us</h3>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-center md:justify-start justify-center">
+                        <i class="fa-solid fa-phone text-gray-400 mr-3"></i> 
+                        <a href="tel:+85512345678" class="text-gray-300 hover:text-white transition duration-300"> +855 12 345 678</a>
+                    </li>
+                    <li class="flex items-center md:justify-start justify-center">
+                        <i class="fa-solid fa-envelope text-gray-400 mr-3"></i> 
+                        <a href="mailto:info@thresidence.com" class="text-gray-300 hover:text-white transition duration-300">thresidence.socialmedia@gmail.com</a>
+                    </li>
+                    <li class="flex items-start md:justify-start justify-center">
+                        <i class="fa-solid fa-location-dot text-gray-400 mr-3 mt-1"></i> 
+                        <span class="text-gray-300">Project DongKoa I, Phnom Penh, Cambodia</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">Useful Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="index.html" class="footer-link">Home page</a></li>
+                    <li><a href="index.html#properties-section" class="footer-link">Properties</a></li>
+                    <li><a href="index.html#about-us-section" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Terms of Service</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Sitemap</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">Newsletter</h3>
+                <p class="text-gray-300 text-sm mb-4">Subscribe to our newsletter for the latest updates and offers.</p>
+                <form class="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
+                    <input type="email" placeholder="Your email address" class="flex-grow p-2 rounded-md bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-1 focus:ring-[#7E252C]">
+                    <button type="submit" class="bg-[#7E252C] text-white p-2 rounded-md hover:bg-red-800 transition duration-300 ease-in-out">Subscribe</button>
+                </form>
+                
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4 mt-8">Follow Us</h3>
+                <div class="flex justify-center md:justify-start space-x-6">
+                    <a href="https://www.facebook.com/THresidences" target="_blank" aria-label="Facebook" class="social-icon text-3xl">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="https://t.me/THResidence" target="_blank" aria-label="Telegram" class="social-icon text-3xl">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                    <a href="https://www.instagram.com/thresidences/" target="_blank" aria-label="Instagram" class="social-icon text-3xl">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+            &copy; <span id="current-year-footer"></span> TH Residence. All rights reserved.
+        </div>
+    </footer>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.getElementById('current-year-footer').textContent = new Date().getFullYear();
+        AOS.init(); // Initialize AOS
+
+        // --- Image Modal/Lightbox Logic with Carousel ---
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const prevButton = document.getElementById('prev-image-button');
+        const nextButton = document.getElementById('next-image-button');
+        
+        // Select all clickable images, including carousel slides and grid images
+        const clickableImages = document.querySelectorAll('.clickable-image'); 
+
+        let currentImageGroup = [];
+        let currentImageIndex = 0;
+
+        function showImageInModal(index) {
+            if (currentImageGroup.length > 0 && index >= 0 && index < currentImageGroup.length) {
+                modalImage.src = currentImageGroup[index];
+                currentImageIndex = index;
+
+                // Always show navigation buttons for modal carousel if there's more than one image
+                prevButton.classList.toggle('hidden', currentImageGroup.length <= 1);
+                nextButton.classList.toggle('hidden', currentImageGroup.length <= 1);
+            }
+        }
+
+        clickableImages.forEach(image => {
+            image.addEventListener('click', function() {
+                // Determine the group of images for the modal
+                let groupImages = [];
+                let clickedImageSrc = this.getAttribute('data-fullsrc') || this.src;
+
+                // Check if the clicked image is part of the main shophouse carousel
+                if (this.closest('#shophouse-carousel')) {
+                    groupImages = shophouseImages;
+                } 
+                // Check if the clicked image is part of the interior spaces grid
+                else if (this.closest('.interior-image-container')) {
+                    groupImages = Array.from(document.querySelectorAll('.interior-image-container .clickable-image')).map(img => img.getAttribute('data-fullsrc') || img.src);
+                }
+                // Check if the clicked image is part of the floor plans grid
+                else if (this.closest('.plan-image-container')) {
+                    groupImages = Array.from(document.querySelectorAll('.plan-image-container .clickable-image')).map(img => img.getAttribute('data-fullsrc') || img.src);
+                }
+                else {
+                    groupImages = [clickedImageSrc]; // Single image, no specific group
+                }
+                
+                currentImageGroup = groupImages;
+                currentImageIndex = currentImageGroup.indexOf(clickedImageSrc);
+
+                if (currentImageGroup.length > 0) {
+                    showImageInModal(currentImageIndex);
+                    imageModal.classList.add('open');
+                    document.body.classList.add('modal-open'); // Add class to body to disable scrolling
+                }
+            });
+        });
+
+        // Navigation buttons event listeners for the modal
+        prevButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent modal from closing when clicking button
+            if (currentImageGroup.length > 1) { // Only navigate if more than one image
+                const prevIndex = (currentImageIndex - 1 + currentImageGroup.length) % currentImageGroup.length;
+                showImageInModal(prevIndex);
+            }
+        });
+
+        nextButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent modal from closing when clicking button
+            if (currentImageGroup.length > 1) { // Only navigate if more than one image
+                const nextIndex = (currentImageIndex + 1) % currentImageGroup.length;
+                showImageInModal(nextIndex);
+            }
+        });
+
+        // Close modal when clicking on the overlay (but not the image or buttons)
+        imageModal.addEventListener('click', function(event) {
+            if (event.target === imageModal) { // Only close if clicked directly on overlay
+                imageModal.classList.remove('open');
+                document.body.classList.remove('modal-open'); // Re-enable scrolling
+                modalImage.src = ''; // Clear image source for next time
+                currentImageGroup = []; // Clear current group
+                currentImageIndex = 0; // Reset index
+            }
+        });
+
+        // Optional: Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && imageModal.classList.contains('open')) {
+                imageModal.classList.remove('open');
+                document.body.classList.remove('modal-open');
+                modalImage.src = '';
+                currentImageGroup = [];
+                currentImageIndex = 0;
+            }
+        });
+
+        // --- Shophouse Main Carousel Logic ---
+        const shophouseCarousel = document.getElementById('shophouse-carousel');
+        const shophousePrevButton = document.getElementById('shophouse-prev');
+        const shophouseNextButton = document.getElementById('shophouse-next');
+        const shophouseIndicatorsContainer = document.getElementById('shophouse-indicators');
+
+       const shophouseImages = [
+            "Image/SHOPHOUSE_EVENING_VIEW022.jpg", // Original Shophouse image
+            "Image/TH_SHOPHOUSE V05.jpg", // Living Room
+            "Image/TH_SHOPHOUSE V02.jpg", // Kitchen
+            "Image/TH_SHOPHOUSE V03.jpg" // Master Bedroom
+        ];
+
+        let currentShophouseDisplayIndex = 0; // Index in the DOM (including clones)
+        let autoPlayIntervalShophouse;
+
+        function initializeShophouseCarousel() {
+            shophouseCarousel.innerHTML = ''; // Clear existing content
+            shophouseIndicatorsContainer.innerHTML = ''; // Clear existing indicators
+
+            // Create slides including clones for seamless looping
+            const shophouseCarouselSlides = [
+                shophouseImages[shophouseImages.length - 1], // Clone of last image
+                ...shophouseImages, // Original images
+                shophouseImages[0] // Clone of first image
+            ];
+
+            shophouseCarouselSlides.forEach((src, index) => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `Shophouse Image ${index + 1}`;
+                img.classList.add('carousel-slide', 'clickable-image'); // Add clickable-image class
+                img.setAttribute('data-fullsrc', src); // Ensure data-fullsrc is set for modal
+                shophouseCarousel.appendChild(img);
+            });
+
+            // Create indicators for original images only
+            shophouseImages.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('indicator-dot');
+                dot.addEventListener('click', () => { 
+                    showShophouseSlide(index + 1); // +1 because of the leading clone
+                    resetAutoPlayShophouse(); 
+                });
+                shophouseIndicatorsContainer.appendChild(dot);
+            });
+
+            currentShophouseDisplayIndex = 1; // Start at the first actual image (index 1 in the display array)
+            showShophouseSlide(currentShophouseDisplayIndex, false); // Show initial slide without transition
+            startAutoPlayShophouse();
+        }
+
+        function showShophouseSlide(index, smoothTransition = true) {
+            const totalOriginalSlides = shophouseImages.length;
+            const displaySlidesCount = totalOriginalSlides + 2; // Original + 2 clones
+
+            shophouseCarousel.style.transition = smoothTransition ? 'transform 0.5s ease-in-out' : 'none';
+            shophouseCarousel.style.transform = `translateX(-${index * 100}%)`;
+            currentShophouseDisplayIndex = index;
+
+            // Update indicators based on the *original* image index
+            let originalIndex = (index - 1 + totalOriginalSlides) % totalOriginalSlides; // Adjust for clones
+            Array.from(shophouseIndicatorsContainer.children).forEach((dot, i) => {
+                dot.classList.toggle('active', i === originalIndex);
+            });
+
+            // Handle seamless looping after transition
+            if (index === displaySlidesCount - 1) { // If it's the cloned first image (at the end)
+                setTimeout(() => {
+                    showShophouseSlide(1, false); // Jump to the actual first image without transition
+                }, 500); // Match transition duration
+            } else if (index === 0) { // If it's the cloned last image (at the beginning)
+                setTimeout(() => {
+                    showShophouseSlide(totalOriginalSlides, false); // Jump to the actual last image without transition
+                }, 500); // Match transition duration
+            }
+        }
+
+        function nextShophouseSlide() {
+            showShophouseSlide(currentShophouseDisplayIndex + 1);
+            resetAutoPlayShophouse();
+        }
+
+        function prevShophouseSlide() {
+            showShophouseSlide(currentShophouseDisplayIndex - 1);
+            resetAutoPlayShophouse();
+        }
+
+        function startAutoPlayShophouse() {
+            stopAutoPlayShophouse(); // Clear any existing interval
+            autoPlayIntervalShophouse = setInterval(() => {
+                showShophouseSlide(currentShophouseDisplayIndex + 1);
+            }, 5000); // Change slide every 5 seconds
+        }
+
+        function stopAutoPlayShophouse() {
+            clearInterval(autoPlayIntervalShophouse);
+        }
+
+        function resetAutoPlayShophouse() {
+            stopAutoPlayShophouse();
+            startAutoPlayShophouse();
+        }
+
+        // Event listeners for carousel navigation
+        shophouseNextButton.addEventListener('click', nextShophouseSlide);
+        shophousePrevButton.addEventListener('click', prevShophouseSlide);
+
+        // Initialize the shophouse carousel when the DOM is ready
+        document.addEventListener('DOMContentLoaded', initializeShophouseCarousel);
+
+
+        // Mobile Menu Toggle Logic (Re-added for this page's header)
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mainNavigation = document.getElementById('main-navigation');
+
+        if (mobileMenuButton && mainNavigation) {
+            mobileMenuButton.addEventListener('click', () => {
+                mainNavigation.classList.toggle('hidden');
+                mainNavigation.classList.toggle('flex'); // Use flex for vertical stacking when open
+                mainNavigation.classList.toggle('flex-col'); // Ensure vertical stacking
+                mainNavigation.classList.toggle('items-center'); // Center items when open
+                mainNavigation.classList.toggle('space-y-4'); // Add vertical space
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TH Residence - 3D View</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css"> 
+    <style>
+        /* This ensures the iframe fills the available space */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100) */
+            height: 0;
+            overflow: hidden;
+            background-color: #f0f0f0; /* Light background while loading */
+        }
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <header class="bg-white shadow-md p-4 w-full fixed top-0 left-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800 mb-4 md:mb-0 flex items-center">
+                <img src="https://res.cloudinary.com/dwkr6qrpf/image/upload/v1750840471/483965830_1050027857161122_7598377911211969177_n_tmxqby.jpg" alt="Company Logo" class="w-8 h-8 rounded-full object-cover mr-2">
+                <a href="index.html" class="hover:text-[#7E252C] transition duration-300 ease-in-out"> TH RESIDECNE </a> 
+            </div>
+
+            <nav>
+                <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-8 text-lg font-medium">
+                    <li>
+                        <a href="Test-about-us.html" class="text-gray-700 hover:text-[#7E252C] transition duration-300 ease-in-out rounded-md p-2 -m-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Home page</a>
+                    </li>
+                    <li>
+                        <a href="properties.html" class="text-gray-700 hover:text-[#7E252C] transition duration-300 ease-in-out rounded-md p-2 -m-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity0">Properties</a>
+                    </li>
+                    <li>
+                        <a href="about-us.html" class="text-gray-700 hover:text-[#7E252C] transition duration-300 ease-in-out rounded-md p-2 -m-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">About Us</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <main class="flex-grow w-full py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-[#7E252C] mb-6 text-center">Explore the Shophouse in 3D!</h1>
+            
+            <div class="iframe-container shadow-xl rounded-lg">
+                <iframe src="https://momento360.com/e/uc/64e75d37edf947958f7f1a6f79179cbe?utm_campaign=embed&utm_source=other&size=medium&display-plan=true" allowfullscreen></iframe>
+            </div>
+
+            <div class="text-center mt-8">
+                <p class="text-gray-600">This immersive 3D experience allows you to virtually walk through the property.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12 px-4 mt-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center md:text-left">
+            <div>
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">About TH Residence</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                    TH Residence is committed to delivering high-quality, modern living and business spaces in prime locations across Phnom Penh. We focus on innovative design, sustainable practices, and exceptional customer service.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">Contact Us</h3>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-center md:justify-start justify-center">
+                        <i class="fa-solid fa-phone text-gray-400 mr-3"></i> 
+                        <a href="tel:+85512345678" class="text-gray-300 hover:text-white transition duration-300"> +855 12 345 678</a>
+                    </li>
+                    <li class="flex items-center md:justify-start justify-center">
+                        <i class="fa-solid fa-envelope text-gray-400 mr-3"></i> 
+                        <a href="mailto:info@thresidence.com" class="text-gray-300 hover:text-white transition duration-300">thresidence.socialmedia@gmail.com</a>
+                    </li>
+                    <li class="flex items-start md:justify-start justify-center">
+                        <i class="fa-solid fa-location-dot text-gray-400 mr-3 mt-1"></i> 
+                        <span class="text-gray-300">Project DongKoa I, Phnom Penh, Cambodia</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">Useful Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="./" class="footer-link">Home page</a></li>
+                    <li><a href="./#properties-section" class="footer-link">Properties</a></li>
+                    <li><a href="./#about-us-section" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Terms of Service</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Sitemap</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">Newsletter</h3>
+                <p class="text-gray-300 text-sm mb-4">Subscribe to our newsletter for the latest updates and offers.</p>
+                <form class="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
+                    <input type="email" placeholder="Your email address" class="flex-grow p-2 rounded-md bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-1 focus:ring-[#7E252C]">
+                    <button type="submit" class="bg-[#7E252C] text-white p-2 rounded-md hover:bg-red-800 transition duration-300 ease-in-out">Subscribe</button>
+                </form>
+                
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4 mt-8">Follow Us</h3>
+                <div class="flex justify-center md:justify-start space-x-6">
+                    <a href="https://www.facebook.com/THresidences" target="_blank" aria-label="Facebook" class="social-icon text-3xl">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="https://t.me/THResidence" target="_blank" aria-label="Telegram" class="social-icon text-3xl">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                    <a href="https://www.instagram.com/thresidences/" target="_blank" aria-label="Instagram" class="social-icon text-3xl">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+            &copy; <span id="current-year-footer"></span> TH Residence. All rights reserved.
+        </div>
+    </footer>
+    <script>
+        document.getElementById('current-year-footer').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

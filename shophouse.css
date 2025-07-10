@@ -1,0 +1,202 @@
+/* style.css */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6; /* Fallback background color */
+    padding-top: 64px; /* Adjust this value if header height changes */
+    position: relative;
+    z-index: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll for the main body */
+    scroll-padding-top: 64px; /* Ensures content isn't hidden by the fixed header when scrolling to an ID */
+}
+
+/* Full page background image with blur */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://res.cloudinary.com/dwkr6qrpf/image/upload/v1750842465/MASTER_PLAN_qsvxhr.jpg'); /* Your original full-page background */
+    background-size: cover;
+    background-position: center;
+    filter: blur(2px); /* Maintain original blur amount */
+    z-index: -1;
+}
+
+
+/* Hide scrollbar for a cleaner look, but still allow scrolling */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Styles for the main header image carousel container */
+.header-carousel-container {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Increased base height for mobile */
+    overflow: hidden; /* Ensures images don't spill outside */
+}
+/* Media queries for header-carousel-container */
+@media (min-width: 768px) { /* md breakpoint */
+    .header-carousel-container {
+        height: 600px; /* Increased taller on desktop */
+    }
+}
+@media (min-width: 1024px) { /* lg breakpoint */
+    .header-carousel-container {
+        height: 750px; /* Increased even taller on larger desktop screens */
+    }
+}
+
+
+/* Keyframe animation for subtle zoom */
+@keyframes subtleZoom {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.03); /* Zoom in slightly */
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Styles for the clear image layer */
+.header-carousel-slide img { /* Targeting img directly inside .header-carousel-slide */
+    width: 100%; /* Make image take full width of its slide container */
+    height: 100%; /* Make image take full height of its slide container */
+    object-fit: cover; /* Image will cover the entire area, potentially cropping */
+    transition: opacity 1000ms ease-in-out; /* Keep fade transition */
+    /* Apply the animation here */
+    animation: subtleZoom 8s infinite alternate ease-in-out; /* 8s duration, infinite, alternates direction */
+}
+
+/* Added a class for the specific min-width of the cards in the horizontal scroll */
+.card-min-width {
+    min-width: 280px; /* Adjust this value to control how wide cards are on mobile */
+}
+
+
+/* Styling for the 'More Details' button as an anchor tag */
+.more-details-button {
+    display: inline-block; /* Make it behave like a block for padding/margin */
+    text-align: center; /* Center its text */
+    text-decoration: none; /* Remove underline */
+}
+
+/* Social media icon styling for footer */
+.social-icon {
+    color: #f3f4f6; /* Lighter color for footer icons */
+    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.social-icon:hover {
+    transform: scale(1.1); /* Subtle hover effect */
+    color: #7E252C; /* Hover color to brand red */
+}
+
+/* Footer links */
+.footer-link {
+    color: #d1d5db; /* gray-300 */
+    transition: color 0.2s ease-in-out;
+}
+.footer-link:hover {
+    color: #ffffff; /* white */
+}
+
+/* Custom styles for shophouse-details.html */
+.section-padding {
+    padding-top: 4rem; /* py-16 */
+    padding-bottom: 4rem; /* py-16 */
+}
+.image-caption {
+    font-size: 0.875rem; /* text-sm */
+    color: #6b7280; /* text-gray-600 */
+}
+/* Custom style for the floor plan and interior image containers */
+.plan-image-container, .interior-image-container {
+    background-color: #f8f8f8; /* Light background for placeholder */
+    border-radius: 0.5rem; /* rounded-lg */
+    overflow: hidden; /* Ensures image fits */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+}
+.plan-image-container img, .interior-image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0.25rem; /* rounded */
+}
+        /* Base styles for body */
+        body {
+            padding-top: 64px; /* Adjust this value if header height changes */
+        }
+        .section-padding {
+            padding-top: 4rem; /* py-16 */
+            padding-bottom: 4rem; /* py-16 */
+        }
+         .image-caption {
+            font-size: 0.875rem; /* text-sm */
+            color: #6b7280; /* text-gray-600 */
+        }
+        /* Custom style for the floor plan and interior image containers */
+        .plan-image-container, .interior-image-container {
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow: hidden; /* Ensures image fits */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+        .plan-image-container img, .interior-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.25rem; /* rounded */
+            cursor: pointer; /* Indicate clickable */
+            transition: transform 0.2s ease-in-out; /* For hover effect */
+        }
+        .plan-image-container img:hover, .interior-image-container img:hover {
+            transform: scale(1.02); /* Slight zoom on hover */
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top of everything */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            backdrop-filter: blur(5px); /* Blurred background content */
+            -webkit-backdrop-filter: blur(5px); /* Safari support */
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain; /* Ensures the whole image is visible */
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transform: scale(0.8);
+            transition: transform 0.3s ease-in-out;
+        }
+        .modal-overlay.open .modal-content {
+            transform: scale(1);
+        }
+        /* Hide scrollbar when modal is open */
+        body.modal-open {
+            overflow: hidden;
+        }
