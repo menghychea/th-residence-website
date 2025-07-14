@@ -12,9 +12,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- AOS CSS CDN link -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <!-- Custom CSS files -->
-    <link rel="stylesheet" href="css/style.css"> 
-    <link rel="stylesheet" href="css/shophouse.css"> <!-- Reusing shophouse.css for common styles -->
+
+    <!-- Pannellum CSS for 360 viewer -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+  
     <style>
         /* Base styles for body */
         body {
@@ -211,6 +212,22 @@
         .carousel-indicators .indicator-dot.active {
             background-color: white;
         }
+
+           /* 360 Viewer specific styles */
+        #panorama-viewer {
+            width: 100%;
+            height: 500px; /* Adjust height as needed */
+            border-radius: 0.75rem; /* Matches rounded-xl Tailwind class */
+            overflow: hidden; /* Ensures content respects border-radius */
+        }
+        /* Floor Plans Grid Centering */
+        .floor-plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust minmax as needed */
+            gap: 1.5rem; /* gap-6 from Tailwind */
+            justify-items: center; /* Centers items within their grid cells */
+            justify-content: center; /* Centers the grid itself if there's extra space */
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -284,27 +301,20 @@
 
             <section class="mb-12 px-4 py-16 bg-gray-50 rounded-lg shadow-inner mt-8" data-aos="fade-up" data-aos-duration="1000">
                 <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Floor Plans / ប្លង់ផ្ទះ</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="plan-image-container p-4">
-                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Ground Floor Plan" class="clickable-image" data-group="linkhouse-floorplans" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <img src="Image/B_GFloor.png" alt="Linkhouse Ground Floor Plan" class="clickable-image" data-group="linkhouse-floorplans" data-fullsrc="Image/B_GFloor.png">
                         <p class="image-caption text-center mt-2">GROUND FLOOR</p>
                     </div>
                     <div class="plan-image-container p-4">
-                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse 1st Floor Plan" class="clickable-image" data-group="linkhouse-floorplans" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <img src="Image/B_1Floor.png" alt="Linkhouse 1st Floor Plan" class="clickable-image" data-group="linkhouse-floorplans" data-fullsrc="Image/B_1Floor.png">
                         <p class="image-caption text-center mt-2">1ST FLOOR</p>
                     </div>
                     <div class="plan-image-container p-4">
-                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse 2nd Floor Plan" class="clickable-image" data-group="linkhouse-floorplans" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <img src="Image/B_2Floor.png" alt="Linkhouse 2nd Floor Plan" class="clickable-image" data-group="linkhouse-floorplans" data-fullsrc="Image/B_2Floor.png">
                         <p class="image-caption text-center mt-2">2ND FLOOR</p>
                     </div>
-                    <div class="plan-image-container p-4">
-                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse 3rd Floor Plan" class="clickable-image" data-group="linkhouse-floorplans" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
-                        <p class="image-caption text-center mt-2">3RD FLOOR</p>
-                    </div>
                 </div>
-                <p class="text-gray-600 text-sm text-center mt-6">
-                    <strong class="text-red-700">Note:</strong> Please replace these placeholder images with actual floor plans for the Link House.
-                </p>
             </section>
 
             <section class="mb-12 px-4 py-16 bg-white rounded-lg shadow-lg mt-8" data-aos="fade-up" data-aos-duration="1000">
@@ -314,50 +324,50 @@
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-x-8 gap-y-4 text-gray-700 text-lg mb-8">
                     <div class="flex items-center">
                         <i class="fa-solid fa-bed w-5 h-5 mr-2 text-gray-500"></i>
-                        <span>បន្ទប់គេង | Bedroom: <span class="font-bold">4</span></span>
+                        <span>បន្ទប់គេង | Bedroom: <span class="font-bold">5</span></span>
                     </div>
                     <div class="flex items-center">
                         <i class="fa-solid fa-bath w-5 h-5 mr-2 text-gray-500"></i>
-                        <span>បន្ទប់ទឹក | Bathroom: <span class="font-bold">5</span></span>
-                    </div>
-                    <div class="flex items-center">
-                        <i class="fa-solid fa-box-archive w-5 h-5 mr-2 text-gray-500"></i>
-                        <span>បន្ទប់ដាក់ឥវ៉ាន់ | Storage room: <span class="font-bold">1</span></span>
+                        <span>បន្ទប់ទឹក | Bathroom: <span class="font-bold">6</span></span>
                     </div>
                 </div>
 
                 <!-- Interior Spaces Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     <div class="interior-image-container p-4">
-                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Living Room" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <img src="Image/B-LIVING ROOM-1.jpg" alt="Linkhouse Living Room" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/B-LIVING ROOM-1.jpg">
                         <p class="image-caption text-center mt-2">បន្ទប់ទទួលភ្ញៀវ | LIVINGROOM</p>
                     </div>
                     <div class="interior-image-container p-4">
-                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Kitchen" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <img src="Image/B-KITCHEN-1.jpg" alt="Linkhouse Kitchen" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/B-KITCHEN-1.jpg">
                         <p class="image-caption text-center mt-2">ផ្ទះបាយ | KITCHEN</p>
                     </div>
                     <div class="interior-image-container p-4">
-                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Master Bedroom" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
+                        <img src="Image/B-MASTER BEDROOM-3.png" alt="Linkhouse Master Bedroom" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/B-MASTER BEDROOM-3.png">
                         <p class="image-caption text-center mt-2">បន្ទប់គេងធំ | MASTER BEDROOM</p>
                     </div>
                     <div class="interior-image-container p-4">
-                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Office Room" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
-                        <p class="image-caption text-center mt-2">បន្ទប់ការិយាល័យ | OFFICE ROOM</p>
+                        <img src="Image/B-HOME OFFICE-1.png" alt="Linkhouse Home Office" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/B-HOME OFFICE-1.png">
+                        <p class="image-caption text-center mt-2">បន្ទប់ការិយាល័យ | HOME OFFICE</p>
                     </div>
                     <div class="interior-image-container p-4">
-                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Party Room" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
-                        <p class="image-caption text-center mt-2">បន្ទប់ជប់លៀង | PARTY ROOM</p>
+                        <img src="Image/B-GIRL BEDROOM-3.png" alt="Linkhouse Girl Bedroom" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/B-GIRL BEDROOM-3.png">
+                        <p class="image-caption text-center mt-2">បន្ទប់កូនស្រី | GIRL BEDROOM</p>
                     </div>
                     <div class="interior-image-container p-4">
-                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Linkhouse Outdoor Space" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/LINK HOUSE_EVENING_VIEW055.jpg">
-                        <p class="image-caption text-center mt-2">សួនច្បារខាងក្រៅ | OUTDOOR SPACE</p>
+                        <img src="Image/B-BOY BEDROOM-1.png" alt="Linkhouse Boy Bedroom" class="clickable-image" data-group="linkhouse-interior-all" data-fullsrc="Image/B-BOY BEDROOM-1.png">
+                        <p class="image-caption text-center mt-2">បន្ទប់កូនប្រុស | BOY BEDROOM</p>
                     </div>
                 </div>
-
-                <p class="text-gray-600 text-sm text-center mt-6">
-                    <strong class="text-red-700">Note:</strong> Please replace these placeholder images with actual interior/exterior renders for the Link House.
-                </p>
             </section>
+           <!-- 360 Degree View Section - Added to Shophouse Details Page -->
+            <section id="panorama-section" class="max-w-7xl mx-auto px-4 py-8 bg-white shadow-lg rounded-xl text-center" data-aos="fade-up" data-aos-duration="1000">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Experience 360° View / ទស្សនាទិដ្ឋភាព 360°</h2>
+                <p class="text-gray-700 mb-6">Step inside and explore the immersive 360-degree view of this shophouse.</p>
+                <div id="panorama-viewer"></div>
+                <p class="mt-4 text-gray-600 text-sm">Drag your mouse to look around!</p>
+            </section>
+            <!-- End 360 Degree View Section -->
 
         </div>
     </main>
@@ -442,180 +452,277 @@
         </div>
     </footer>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Pannellum JavaScript for 360 viewer -->
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <script>
+        // Dynamically set the current year in the footer
         document.getElementById('current-year-footer').textContent = new Date().getFullYear();
         AOS.init(); // Initialize AOS
 
-        // --- Image Modal/Lightbox Logic with Carousel ---
-        const imageModal = document.getElementById('image-modal');
-        const modalImage = document.getElementById('modal-image');
-        const prevButton = document.getElementById('prev-image-button');
-        const nextButton = document.getElementById('next-image-button');
-        
-        // Select all clickable images, including carousel slides and grid images
-        const clickableImages = document.querySelectorAll('.clickable-image'); 
+        // Determine the base path for GitHub Pages and local development once
+        const pathSegments = window.location.pathname.split('/');
+        const isGitHubPages = pathSegments.length > 1 && pathSegments[1] === 'th-residence-website';
+        const basename = isGitHubPages ? '/th-residence-website/' : ''; // Use empty string for local development
 
-        let currentImageGroup = [];
-        let currentImageIndex = 0;
+        // Log the basename to console for debugging
+        console.log("Basename determined:", basename);
 
-        function showImageInModal(index) {
-            if (currentImageGroup.length > 0 && index >= 0 && index < currentImageGroup.length) {
-                modalImage.src = currentImageGroup[index];
-                currentImageIndex = index;
+        // Declare carousel elements in a scope accessible to all carousel functions
+        let linkhouseCarousel;
+        let linkhouseIndicatorsContainer;
+        let linkhousePrevButton;
+        let linkhouseNextButton;
 
-                // Always show navigation buttons for modal carousel if there's more than one image
-                prevButton.classList.toggle('hidden', currentImageGroup.length <= 1);
-                nextButton.classList.toggle('hidden', currentImageGroup.length <= 1);
-            }
-        }
-
-        clickableImages.forEach(image => {
-            image.addEventListener('click', function() {
-                // Determine the group of images for the modal
-                let groupImages = [];
-                let clickedImageSrc = this.getAttribute('data-fullsrc') || this.src;
-
-                // Check if the clicked image is part of the main linkhouse carousel
-                if (this.closest('#linkhouse-carousel')) { // Changed ID to linkhouse-carousel
-                    groupImages = linkhouseImages; // Changed array name to linkhouseImages
-                } 
-                // Check if the clicked image is part of the interior spaces grid
-                else if (this.closest('.interior-image-container')) {
-                    groupImages = Array.from(document.querySelectorAll('.interior-image-container .clickable-image')).map(img => img.getAttribute('data-fullsrc') || img.src);
-                }
-                // Check if the clicked image is part of the floor plans grid
-                else if (this.closest('.plan-image-container')) {
-                    groupImages = Array.from(document.querySelectorAll('.plan-image-container .clickable-image')).map(img => img.getAttribute('data-fullsrc') || img.src);
-                }
-                else {
-                    groupImages = [clickedImageSrc]; // Single image, no specific group
-                }
-                
-                currentImageGroup = groupImages;
-                currentImageIndex = currentImageGroup.indexOf(clickedImageSrc);
-
-                if (currentImageGroup.length > 0) {
-                    showImageInModal(currentImageIndex);
-                    imageModal.classList.add('open');
-                    document.body.classList.add('modal-open'); // Add class to body to disable scrolling
+        // Function to update relative paths
+        function updateRelativePaths(selector, attribute) {
+            document.querySelectorAll(selector).forEach(element => {
+                let currentPath = element.getAttribute(attribute);
+                // Only modify if it's a relative path and not an absolute URL or anchor
+                if (currentPath && !currentPath.startsWith('http') && !currentPath.startsWith('/') && !currentPath.startsWith('#')) {
+                    element.setAttribute(attribute, basename + currentPath);
+                } else if (currentPath && currentPath.startsWith('./')) {
+                    // Handle relative paths like "./" for navigation
+                    const cleanedPath = currentPath.substring(2); // Remove "./"
+                    element.setAttribute(attribute, basename + cleanedPath);
                 }
             });
-        });
+        }
 
-        // Navigation buttons event listeners for the modal
-        prevButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent modal from closing when clicking button
-            if (currentImageGroup.length > 1) { // Only navigate if more than one image
-                const prevIndex = (currentImageIndex - 1 + currentImageGroup.length) % currentImageGroup.length;
-                showImageInModal(prevIndex);
+        // Apply path updates to various elements after the DOM is ready
+        // This is crucial for local development where <base> tag is not used.
+        // For GitHub Pages, the `basename` will prepend the correct path.
+        document.addEventListener('DOMContentLoaded', () => {
+            updateRelativePaths('img', 'src'); // For image sources
+            updateRelativePaths('a', 'href'); // For anchor links (excluding # links)
+            // Note: link[rel="stylesheet"] hrefs are handled by embedding CSS directly or using absolute CDN links
+            
+            // Initialize Linkhouse Carousel when DOM is ready
+            initializeLinkhouseCarousel();
+
+            // Mobile Menu Toggle Logic
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mainNavigation = document.getElementById('main-navigation');
+            const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+
+            if (mobileMenuButton && mainNavigation) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mainNavigation.classList.toggle('hidden');
+                    mainNavigation.classList.toggle('flex'); 
+                    mainNavigation.classList.toggle('flex-col'); 
+                    mainNavigation.classList.toggle('items-center'); 
+                    mainNavigation.classList.toggle('space-y-4'); 
+                    mainNavigation.classList.toggle('fixed'); 
+                    mainNavigation.classList.toggle('inset-0'); 
+                    mainNavigation.classList.toggle('bg-white'); 
+                    mainNavigation.classList.toggle('p-8'); 
+                    mainNavigation.classList.toggle('z-[60]'); 
+                    document.body.classList.toggle('modal-open'); 
+                });
             }
-        });
 
-        nextButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent modal from closing when clicking button
-            if (currentImageGroup.length > 1) { // Only navigate if more than one image
-                const nextIndex = (currentImageIndex + 1) % currentImageGroup.length;
-                showImageInModal(nextIndex);
+            if (mobileMenuCloseButton) {
+                mobileMenuCloseButton.addEventListener('click', () => {
+                    mainNavigation.classList.add('hidden');
+                    mainNavigation.classList.remove('flex', 'fixed', 'inset-0', 'bg-white', 'p-8', 'z-[60]');
+                    document.body.classList.remove('modal-open'); 
+                });
             }
-        });
 
-        // Close modal when clicking on the overlay (but not the image or buttons)
-        imageModal.addEventListener('click', function(event) {
-            if (event.target === imageModal) { // Only close if clicked directly on overlay
-                imageModal.classList.remove('open');
-                document.body.classList.remove('modal-open'); // Re-enable scrolling
-                modalImage.src = ''; // Clear image source for next time
-                currentImageGroup = []; // Clear current group
-                currentImageIndex = 0; // Reset index
+            // Back to Top Button Logic
+            const backToTopButton = document.getElementById('back-to-top');
+            if (backToTopButton) { // Check if button exists before adding listener
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 300) { 
+                        backToTopButton.style.display = 'block';
+                    } else {
+                        backToTopButton.style.display = 'none';
+                    }
+                });
+
+                backToTopButton.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth' 
+                    });
+                });
             }
-        });
 
-        // Optional: Close modal with Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && imageModal.classList.contains('open')) {
-                imageModal.classList.remove('open');
-                document.body.classList.remove('modal-open');
-                modalImage.src = '';
-                currentImageGroup = [];
-                currentImageIndex = 0;
+            // --- Image Modal/Lightbox Logic with Carousel ---
+            const imageModal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            const prevButton = document.getElementById('prev-image-button');
+            const nextButton = document.getElementById('next-image-button');
+            
+            // Select all clickable images, including carousel slides and grid images
+            const clickableImages = document.querySelectorAll('.clickable-image'); 
+
+            let currentImageGroup = [];
+            let currentImageIndex = 0;
+
+            function showImageInModal(index) {
+                if (currentImageGroup.length > 0 && index >= 0 && index < currentImageGroup.length) {
+                    modalImage.src = currentImageGroup[index];
+                    currentImageIndex = index;
+
+                    prevButton.classList.toggle('hidden', currentImageGroup.length <= 1);
+                    nextButton.classList.toggle('hidden', currentImageGroup.length <= 1);
+                }
             }
-        });
 
-        // --- Linkhouse Main Carousel Logic --- (Changed from Shophouse)
-        const linkhouseCarousel = document.getElementById('linkhouse-carousel');
-        const linkhousePrevButton = document.getElementById('linkhouse-prev');
-        const linkhouseNextButton = document.getElementById('linkhouse-next');
-        const linkhouseIndicatorsContainer = document.getElementById('linkhouse-indicators');
+            clickableImages.forEach(image => {
+                image.addEventListener('click', function() {
+                    let groupImages = [];
+                    let clickedImageSrc = this.getAttribute('data-fullsrc') || this.src;
 
+                    if (this.closest('#linkhouse-carousel')) { 
+                        groupImages = linkhouseImages.map(src => basename + src); // Ensure basename is applied
+                    } 
+                    else if (this.closest('.interior-image-container')) {
+                        groupImages = Array.from(document.querySelectorAll('.interior-image-container .clickable-image')).map(img => basename + (img.getAttribute('data-fullsrc') || img.src.replace(basename, ''))); // Ensure basename is applied
+                    }
+                    else if (this.closest('.plan-image-container')) {
+                        groupImages = Array.from(document.querySelectorAll('.plan-image-container .clickable-image')).map(img => basename + (img.getAttribute('data-fullsrc') || img.src.replace(basename, ''))); // Ensure basename is applied
+                    }
+                    else {
+                        groupImages = [clickedImageSrc]; 
+                    }
+                    
+                    currentImageGroup = groupImages;
+                    currentImageIndex = currentImageGroup.indexOf(clickedImageSrc);
+
+                    if (currentImageGroup.length > 0) {
+                        showImageInModal(currentImageIndex);
+                        imageModal.classList.add('open');
+                        document.body.classList.add('modal-open'); 
+                    }
+                });
+            });
+
+            prevButton.addEventListener('click', (event) => {
+                event.stopPropagation(); 
+                if (currentImageGroup.length > 1) { 
+                    const prevIndex = (currentImageIndex - 1 + currentImageGroup.length) % currentImageGroup.length;
+                    showImageInModal(prevIndex);
+                }
+            });
+
+            nextButton.addEventListener('click', (event) => {
+                event.stopPropagation(); 
+                if (currentImageGroup.length > 1) { 
+                    const nextIndex = (currentImageIndex + 1) % currentImageGroup.length;
+                    showImageInModal(nextIndex);
+                }
+            });
+
+            imageModal.addEventListener('click', function(event) {
+                if (event.target === imageModal) { 
+                    imageModal.classList.remove('open');
+                    document.body.classList.remove('modal-open'); 
+                    modalImage.src = ''; 
+                    currentImageGroup = []; 
+                    currentImageIndex = 0; 
+                }
+            });
+
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && imageModal.classList.contains('open')) {
+                    imageModal.classList.remove('open');
+                    document.body.classList.remove('modal-open');
+                    modalImage.src = '';
+                    currentImageGroup = [];
+                    currentImageIndex = 0;
+                }
+            });
+        }); // End DOMContentLoaded
+
+        // --- Linkhouse Main Carousel Logic --- 
         const linkhouseImages = [
-            "Image/LINK HOUSE_EVENING_VIEW055.jpg", // Original Linkhouse image
-            "Image/LINKHOUSE_LIVING_ROOM.jpg", // Example Linkhouse Living Room
-            "Image/LINKHOUSE_KITCHEN.jpg", // Example Linkhouse Kitchen
-            "Image/LINKHOUSE_BEDROOM.jpg" // Example Linkhouse Bedroom
+            "Image/LINK HOUSE_EVENING_VIEW055.jpg", 
+            "Image/TH_LINK HOUSE V04.jpg", 
+            "Image/TH_LINK HOUSE V03.jpg", 
+            "Image/TH_LINK HOUSE V05.jpg" 
         ];
 
-        let currentLinkhouseDisplayIndex = 0; // Index in the DOM (including clones)
+        let currentLinkhouseDisplayIndex = 0; 
         let autoPlayIntervalLinkhouse;
 
         function initializeLinkhouseCarousel() {
-            linkhouseCarousel.innerHTML = ''; // Clear existing content
-            linkhouseIndicatorsContainer.innerHTML = ''; // Clear existing indicators
+            linkhouseCarousel = document.getElementById('linkhouse-carousel');
+            linkhouseIndicatorsContainer = document.getElementById('linkhouse-indicators');
+            linkhousePrevButton = document.getElementById('linkhouse-prev');
+            linkhouseNextButton = document.getElementById('linkhouse-next');
 
-            // Create slides including clones for seamless looping
+            if (!linkhouseCarousel || !linkhouseIndicatorsContainer || !linkhousePrevButton || !linkhouseNextButton) {
+                console.error("Linkhouse carousel elements not found. Skipping initialization.");
+                return;
+            }
+
+            linkhouseCarousel.innerHTML = ''; 
+            linkhouseIndicatorsContainer.innerHTML = ''; 
+
             const linkhouseCarouselSlides = [
-                linkhouseImages[linkhouseImages.length - 1], // Clone of last image
-                ...linkhouseImages, // Original images
-                linkhouseImages[0] // Clone of first image
+                linkhouseImages[linkhouseImages.length - 1], 
+                ...linkhouseImages, 
+                linkhouseImages[0] 
             ];
 
             linkhouseCarouselSlides.forEach((src, index) => {
                 const img = document.createElement('img');
-                img.src = src;
+                img.src = basename + src; 
                 img.alt = `Linkhouse Image ${index + 1}`;
-                img.classList.add('carousel-slide', 'clickable-image'); // Add clickable-image class
-                img.setAttribute('data-fullsrc', src); // Ensure data-fullsrc is set for modal
+                img.classList.add('carousel-slide', 'clickable-image'); 
+                img.setAttribute('data-fullsrc', basename + src); 
                 linkhouseCarousel.appendChild(img);
             });
 
-            // Create indicators for original images only
             linkhouseImages.forEach((_, index) => {
                 const dot = document.createElement('div');
                 dot.classList.add('indicator-dot');
                 dot.addEventListener('click', () => { 
-                    showLinkhouseSlide(index + 1); // +1 because of the leading clone
+                    showLinkhouseSlide(index + 1); 
                     resetAutoPlayLinkhouse(); 
                 });
                 linkhouseIndicatorsContainer.appendChild(dot);
             });
 
-            currentLinkhouseDisplayIndex = 1; // Start at the first actual image (index 1 in the display array)
-            showLinkhouseSlide(currentLinkhouseDisplayIndex, false); // Show initial slide without transition
+            currentLinkhouseDisplayIndex = 1; 
+            showLinkhouseSlide(currentLinkhouseDisplayIndex, false); 
             startAutoPlayLinkhouse();
+
+            linkhouseNextButton.addEventListener('click', nextLinkhouseSlide);
+            linkhousePrevButton.addEventListener('click', prevLinkhouseSlide);
         }
 
         function showLinkhouseSlide(index, smoothTransition = true) {
+            // Ensure linkhouseCarousel is not null before accessing its style property
+            if (!linkhouseCarousel) {
+                console.error("linkhouseCarousel is null in showLinkhouseSlide. Cannot update style.");
+                return;
+            }
+
             const totalOriginalSlides = linkhouseImages.length;
-            const displaySlidesCount = totalOriginalSlides + 2; // Original + 2 clones
+            const displaySlidesCount = totalOriginalSlides + 2; 
 
             linkhouseCarousel.style.transition = smoothTransition ? 'transform 0.5s ease-in-out' : 'none';
             linkhouseCarousel.style.transform = `translateX(-${index * 100}%)`;
             currentLinkhouseDisplayIndex = index;
 
-            // Update indicators based on the *original* image index
-            let originalIndex = (index - 1 + totalOriginalSlides) % totalOriginalSlides; // Adjust for clones
-            Array.from(linkhouseIndicatorsContainer.children).forEach((dot, i) => {
-                dot.classList.toggle('active', i === originalIndex);
-            });
+            // Ensure linkhouseIndicatorsContainer is not null before accessing its children
+            if (linkhouseIndicatorsContainer) { 
+                let originalIndex = (index - 1 + totalOriginalSlides) % totalOriginalSlides; 
+                Array.from(linkhouseIndicatorsContainer.children).forEach((dot, i) => {
+                    dot.classList.toggle('active', i === originalIndex);
+                });
+            }
 
-            // Handle seamless looping after transition
-            if (index === displaySlidesCount - 1) { // If it's the cloned first image (at the end)
+            if (index === displaySlidesCount - 1) { 
                 setTimeout(() => {
-                    showLinkhouseSlide(1, false); // Jump to the actual first image without transition
-                }, 500); // Match transition duration
-            } else if (index === 0) { // If it's the cloned last image (at the beginning)
+                    showLinkhouseSlide(1, false); 
+                }, 500); 
+            } else if (index === 0) { 
                 setTimeout(() => {
-                    showLinkhouseSlide(totalOriginalSlides, false); // Jump to the actual last image without transition
-                }, 500); // Match transition duration
+                    showLinkhouseSlide(totalOriginalSlides, false); 
+                }, 500); 
             }
         }
 
@@ -630,10 +737,10 @@
         }
 
         function startAutoPlayLinkhouse() {
-            stopAutoPlayLinkhouse(); // Clear any existing interval
+            stopAutoPlayLinkhouse(); 
             autoPlayIntervalLinkhouse = setInterval(() => {
                 showLinkhouseSlide(currentLinkhouseDisplayIndex + 1);
-            }, 5000); // Change slide every 5 seconds
+            }, 5000); 
         }
 
         function stopAutoPlayLinkhouse() {
@@ -645,43 +752,31 @@
             startAutoPlayLinkhouse();
         }
 
-        // Event listeners for carousel navigation
-        linkhouseNextButton.addEventListener('click', nextLinkhouseSlide);
-        linkhousePrevButton.addEventListener('click', prevLinkhouseSlide);
-
-        // Initialize the linkhouse carousel when the DOM is ready
-        document.addEventListener('DOMContentLoaded', initializeLinkhouseCarousel);
-
-
-        // Mobile Menu Toggle Logic (Re-added for this page's header)
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mainNavigation = document.getElementById('main-navigation');
-        const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
-
-
-        if (mobileMenuButton && mainNavigation) {
-            mobileMenuButton.addEventListener('click', () => {
-                mainNavigation.classList.toggle('hidden');
-                mainNavigation.classList.toggle('flex'); // Use flex for vertical stacking when open
-                mainNavigation.classList.toggle('flex-col'); // Ensure vertical stacking
-                mainNavigation.classList.toggle('items-center'); // Center items when open
-                mainNavigation.classList.toggle('space-y-4'); // Add vertical space
-                mainNavigation.classList.toggle('fixed'); // Make it fixed
-                mainNavigation.classList.toggle('inset-0'); // Cover full screen
-                mainNavigation.classList.toggle('bg-white'); // Add background
-                mainNavigation.classList.toggle('p-8'); // Add padding
-                mainNavigation.classList.toggle('z-[60]'); // Higher z-index
-                document.body.classList.toggle('modal-open'); // Disable body scroll
-            });
-        }
-
-        if (mobileMenuCloseButton) {
-            mobileMenuCloseButton.addEventListener('click', () => {
-                mainNavigation.classList.add('hidden');
-                mainNavigation.classList.remove('flex', 'fixed', 'inset-0', 'bg-white', 'p-8', 'z-[60]');
-                document.body.classList.remove('modal-open'); // Re-enable body scroll
-            });
-        }
+        // Initialize Pannellum 360 viewer
+        window.onload = function() {
+            if (document.getElementById('panorama-viewer')) {
+                const panoramaPath = basename + "Image/Panorama_TYPE_A.jpg"; // Changed image path to 3D.jpg
+                console.log("Attempting to load 360 panorama from:", panoramaPath); 
+                pannellum.viewer('panorama-viewer', {
+                    "type": "equirectangular",
+                    "image": panoramaPath, 
+                    "autoLoad": true,
+                    "autoRotate": -2, 
+                    "showControls": true,
+                    "mouseZoom": true,
+                    "compass": true,
+                    "hfov": 100, 
+                    "vaov": 70,  
+                    "vOffset": 0,   
+                    "onLoad": function() { 
+                        console.log("Pannellum panorama loaded successfully!");
+                    },
+                    "onError": function(err) { 
+                        console.error("Pannellum panorama failed to load:", err);
+                    }
+                });
+            }
+        };
     </script>
 </body>
 </html>
