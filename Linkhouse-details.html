@@ -13,8 +13,6 @@
     <!-- AOS CSS CDN link -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- Pannellum CSS for 360 viewer -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
   
     <style>
         /* Base styles for body */
@@ -213,13 +211,7 @@
             background-color: white;
         }
 
-           /* 360 Viewer specific styles */
-        #panorama-viewer {
-            width: 100%;
-            height: 500px; /* Adjust height as needed */
-            border-radius: 0.75rem; /* Matches rounded-xl Tailwind class */
-            overflow: hidden; /* Ensures content respects border-radius */
-        }
+       
         /* Floor Plans Grid Centering */
         .floor-plans-grid {
             display: grid;
@@ -360,14 +352,7 @@
                     </div>
                 </div>
             </section>
-           <!-- 360 Degree View Section - Added to Shophouse Details Page -->
-            <section id="panorama-section" class="max-w-7xl mx-auto px-4 py-8 bg-white shadow-lg rounded-xl text-center" data-aos="fade-up" data-aos-duration="1000">
-                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Experience 360° View / ទស្សនាទិដ្ឋភាព 360°</h2>
-                <p class="text-gray-700 mb-6">Step inside and explore the immersive 360-degree view of this shophouse.</p>
-                <div id="panorama-viewer"></div>
-                <p class="mt-4 text-gray-600 text-sm">Drag your mouse to look around!</p>
-            </section>
-            <!-- End 360 Degree View Section -->
+          
 
         </div>
     </main>
@@ -452,8 +437,7 @@
         </div>
     </footer>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- Pannellum JavaScript for 360 viewer -->
-    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
     <script>
         // Dynamically set the current year in the footer
         document.getElementById('current-year-footer').textContent = new Date().getFullYear();
@@ -752,31 +736,6 @@
             startAutoPlayLinkhouse();
         }
 
-        // Initialize Pannellum 360 viewer
-        window.onload = function() {
-            if (document.getElementById('panorama-viewer')) {
-                const panoramaPath = basename + "Image/Panorama_TYPE_A.jpg"; // Changed image path to 3D.jpg
-                console.log("Attempting to load 360 panorama from:", panoramaPath); 
-                pannellum.viewer('panorama-viewer', {
-                    "type": "equirectangular",
-                    "image": panoramaPath, 
-                    "autoLoad": true,
-                    "autoRotate": -2, 
-                    "showControls": true,
-                    "mouseZoom": true,
-                    "compass": true,
-                    "hfov": 100, 
-                    "vaov": 70,  
-                    "vOffset": 0,   
-                    "onLoad": function() { 
-                        console.log("Pannellum panorama loaded successfully!");
-                    },
-                    "onError": function(err) { 
-                        console.error("Pannellum panorama failed to load:", err);
-                    }
-                });
-            }
-        };
     </script>
 </body>
 </html>
