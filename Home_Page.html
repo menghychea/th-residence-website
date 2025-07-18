@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TH Residence</title>
+    <!-- REMOVED: <base href="/th-residence-website/"> to fix anchor link issues -->
+
+    <!-- Corrected Tailwind CSS CDN link -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Corrected Google Fonts CDN link -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- CORRECTED Font Awesome CDN link: changed xintegrity to integrity -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Corrected AOS CSS CDN link -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css"> 
+    
+    
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+
+    <header id="main-header" class="bg-white shadow-lg p-4 w-full fixed top-0 left-0 z-50">
+        <div class="w-full flex items-center justify-between md:flex-row px-4"> <!-- Removed max-w-7xl mx-auto, added w-full and px-4 -->
+            <div class="text-2xl font-bold text-gray-800 flex items-center">
+                <!-- Placeholder for Company Logo -->
+                <img src="Image/profile.jpg" alt="Company Logo" class="w-10 h-10 rounded-full object-cover mr-2">
+                <a href="./" class="hover:text-[#7E252C] transition duration-300 ease-in-out"> TH RESIDENCE </a>
+            </div>
+
+            <!-- Mobile Menu Button (Hamburger Icon) -->
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none z-50 mr-5 ">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+            <!-- Desktop Navigation Links -->
+            <div class="hidden md:flex space-x-12 desktop-nav-links mr-2-"> 
+                <a href="#main-content" class="nav-link-item text-lg font-medium hover:text-[#7E252C] hover:underline transition duration-300 ease-in-out">
+                    <i class="fa-solid fa-house-chimney nav-icon"></i>
+                    <span class="nav-text">Home</span>
+                </a>
+                <a href="#our-business-section" class="nav-link-item text-lg font-medium hover:text-[#7E252C] hover:underline transition duration-300 ease-in-out">
+                    <i class="fa-solid fa-briefcase nav-icon"></i>
+                    <span class="nav-text">Our Business</span>
+                </a>
+                <a href="#properties-section" class="nav-link-item text-lg font-medium hover:text-[#7E252C] hover:underline transition duration-300 ease-in-out">
+                    <i class="fa-solid fa-building nav-icon"></i>
+                    <span class="nav-text">Properties</span>
+                </a>
+               <a href="#about-us-section" class="nav-link-item text-lg font-medium hover:text-[#7E252C] hover:underline transition duration-300 ease-in-out">
+                    <i class="fa-solid fa-circle-info nav-icon"></i>
+                    <span class="nav-text">About US</span>
+                </a>
+            </div>
+        </nav>
+
+         <div id="mobile-menu" class="fixed inset-y-0 right-0 w-64 bg-[#7E252C] text-white p-6 shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 md:hidden">
+            <div class="flex justify-start mb-4"> <!-- Changed to justify-start for close button -->
+                <!-- Close button for mobile menu -->
+                <button id="close-menu-button" class="text-white focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <nav class="space-y-4">
+                <a href="#main-content" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Home</a>
+                <a href="#about-us-section" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">About US</a>
+                <a href="#our-business-section" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Our Business</a>
+                <a href="#services-section" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Services</a>
+                <a href="#properties-section" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Properties</a>
+                <a href="#contact-us-section" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Contact</a>
+            </nav>
+        </div>
+           <div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
+    </header>
+
+
+    <main id="main-content" class="flex-grow w-full space-y-8 pb-8">
+
+        <!-- Main Image Carousel -->
+        <div id="main-image-carousel" class="carousel-container">
+            <div id="main-carousel-inner" class="carousel-inner">
+                <!-- Slides will be injected by JavaScript -->
+            </div>
+            <!-- Text Overlay (Top-Left) -->
+            <div class="carousel-text-overlay">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4"> ធីអេច រេស៊ីដេន</h1>
+                <h1 class="text-lg sm:text-xl md:text-6xl mb-8 max-w-2xl">TH RESIDENCE</h1>
+            </div>
+            <!-- Secondary Text Overlay (Bottom-Right) -->
+            <div class="carousel-secondary-text-overlay">
+                <p class="text-md sm:text-lg md:text-xl">ធីអេច រេស៊ីដេន | វិនិយោគដោយទំនុកចិត្ត</p>
+            </div>
+            <!-- Carousel Navigation Buttons -->
+            <button id="main-prev" class="carousel-nav-button left">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button id="main-next" class="carousel-nav-button right">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <!-- Carousel Indicators -->
+            <div id="main-indicators" class="carousel-indicators">
+                <!-- Indicators will be injected by JavaScript -->
+            </div>
+        </div>
+        <!-- End Main Image Carousel -->
+
+       <!-- New Section: Our Business -->
+        <section id="our-business-section" class="max-w-7xl mx-auto px-4 py-8 bg-white shadow-lg rounded-xl flex flex-col md:flex-row gap-8" data-aos="fade-right" data-aos-duration="1000">
+            <div class="flex-shrink-0 w-full md:w-1/2 relative">
+                <!-- Placeholder for Our Business image -->
+                <img src="Image/our business.jpg" alt="Our Business" class="w-full h-auto object-cover rounded-lg shadow-md">
+                <!-- Dark overlay -->
+                <div class="absolute inset-0 bg-black/30 rounded-lg"></div>
+            </div>
+            <div class="flex-grow text-black-700 text-lg md:w-1/2 ">
+                <h3 class="text-3xl font-bold text-black-700 mb-4 text-center"><span class="border-b-2 border-[#3c0008] pb-2">Our Business</span></h3>
+                <p class="mb-4">
+                    TH Residence is a leading real estate developer dedicated to creating exceptional living and commercial spaces. Our business model focuses on sustainable development, innovative design, and community building. We pride ourselves on delivering projects that not only meet but exceed the expectations of our clients.
+                </p>
+                <p class="mb-4">
+                    From initial concept to final delivery, we manage every aspect of the development process with meticulous attention to detail. Our portfolio includes a diverse range of properties, from modern shophouses perfect for integrated living and business, to comfortable link houses designed for family harmony.
+                </p>
+        </section>
+        <!-- End New Section: Our Business -->
+
+        <section id="properties-section">
+            <div id="project-dongkoa-i-section" class="project-dongkoa-bg w-full py-2 text-center text-[#ffffff] text-3xl sm:text-4xl md:text-5xl font-extrabold" data-aos="fade-up" data-aos-duration="1000">
+                PROJECT DONGKOA I
+            </div>     
+            
+            <div class="max-w-7xl mx-auto px-4 py-8">
+                <div class="flex flex-nowrap md:grid md:grid-cols-2 gap-5 overflow-x-auto pb-4 hide-scrollbar md:justify-center">
+                    <!-- Shophouse Card -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden property-card flex flex-col flex-shrink-0 w-[90vw] sm:w-[calc(50vw-2.5rem)] lg:w-auto md:max-w-none card-min-width" data-aos="fade-up" data-aos-duration="1000">
+                        <!-- Placeholder for Shophouse image -->
+                        <img src="Image/SHOPHOUSE_EVENING_VIEW022.jpg" alt="Shophouse" class="w-full h-64 object-cover">
+                        <div class="p-6 flex-grow flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-2xl font-bold text-black-200 mb-2">SHOPHOUSE / ផ្ទះអាជីវកម្ម</h3>
+                                <div class="flex items-center text-gray-700 mb-2">
+                                    <i class="fa-solid fa-bed w-5 h-5 mr-2 text-gray-500"></i>
+                                    <span>6 Bedrooms</span>
+                                </div>
+                                <div class="flex items-center text-gray-700 mb-2">
+                                    <i class="fa-solid fa-bath w-5 h-5 mr-2 text-gray-500"></i>
+                                    <span>7 Bathrooms</span>
+                                </div>
+                                <div class="flex items-center text-gray-700 mb-4">
+                                    <i class="fa-solid fa-dollar-sign w-5 h-5 mr-2 text-gray-500"></i>
+                                    <span class="font-bold text-[#3c0008]">800$</span><span class="text-sm ml-1">/ខែ</span>
+                                </div>
+                                <div class="flex items-center text-gray-700 mb-4">
+                                    <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                    <span>Dong Kao I, Phnom Penh</span>
+                                </div>
+                            </div>
+                            <a href="shophouse-details.html" class="mt-4 bg-[#3c0008] text-white py-2 px-4 rounded-md hover:bg-red-800 transition duration-300 ease-in-out more-details-button">More Details</a>
+                        </div>
+                    </div>
+
+                    <!-- Link House Card -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden property-card flex flex-col flex-shrink-0 w-[90vw] sm:w-[calc(50vw-2.5rem)] lg:w-auto md:max-w-none card-min-width" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                        <!-- Placeholder for Link House image -->
+                        <img src="Image/LINK HOUSE_EVENING_VIEW055.jpg" alt="Link House" class="w-full h-64 object-cover">
+                        <div class="p-6 flex-grow flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-800 mb-2 ">LINK HOUSE </h3>
+                                <div class="flex items-center text-gray-700 mb-2">
+                                    <i class="fa-solid fa-bed w-5 h-5 mr-2 text-gray-500"></i>
+                                    <span>5 Bedrooms</span>
+                                </div>
+                                <div class="flex items-center text-gray-700 mb-2">
+                                    <i class="fa-solid fa-bath w-5 h-5 mr-2 text-gray-500"></i>
+                                    <span>6 Bathrooms</span>
+                                </div>
+                                <div class="flex items-center text-gray-700 mb-4">
+                                    <i class="fa-solid fa-dollar-sign w-5 h-5 mr-2 text-gray-500"></i>
+                                    <span class="font-bold text-[#7E252C]">600$</span><span class="text-sm ml-1">/ខែ</span>
+                                </div>
+                                <div class="flex items-center text-gray-700 mb-4">
+                                    <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                    <span>Dong Kao I, Phnom Penh</span>
+                                </div>
+                            </div>
+                            <a href="Linkhouse-details.html" class="mt-4 bg-[#7E252C] text-white py-2 px-4 rounded-md hover:bg-red-800 transition duration-300 ease-in-out more-details-button">More Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- New Section: Our Services -->
+        <section id="services-section" class="max-w-7xl mx-auto px-4 py-8 bg-white shadow-lg rounded-xl flex flex-col md:flex-row items-center gap-8" data-aos="fade-right" data-aos-duration="1000">
+            <div class="flex-shrink-0 w-full md:w-1/2">
+                <!-- Placeholder for Services image -->
+                <img src="Image/our_services.jpg" alt="Our Services" class="w-full h-auto object-cover rounded-lg shadow-md">
+            </div>
+            <div class="flex-grow text-gray-700 text-lg">
+                <h3 class="text-3xl font-bold text-gray-800 mb-4 text-center "><span class="border-b-2 border-[#3c0008] pb-2">Our Services</span> </h3>
+                <p class="mb-4">At TH Residence, we offer a comprehensive range of services to meet all your real estate needs, ensuring a smooth and satisfying experience.</p>
+                <ul class="list-disc list-inside space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-handshake mr-3 mt-1 text-[#7E252C]"></i>
+                        <span><strong>Property Sales & Leasing:</strong> Expert guidance for buying, selling, or renting residential and commercial properties.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-building-user mr-3 mt-1 text-[#7E252C]"></i>
+                        <span><strong>Property Management:</strong> Professional management services to maximize your investment returns and minimize hassle.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-lightbulb mr-3 mt-1 text-[#7E252C]"></i>
+                        <span><strong>Consultation & Investment Advice:</strong> Tailored advice to help you make informed decisions in the real estate market.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-headset mr-3 mt-1 text-[#7E252C]"></i>
+                        <span><strong>After-Sales Support:</strong> Dedicated support to assist you even after your property transaction is complete.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-pencil-ruler mr-3 mt-1 text-[#7E252C]"></i>
+                        <span><strong>Custom Home Design:</strong> Collaborate with our team to design and build your dream home (where applicable).</span>
+                    </li>
+                </ul>
+                <a href="#contact-us-section" class="bg-[#7E252C] text-white py-3 px-6 rounded-md hover:bg-red-800 transition duration-300 ease-in-out text-xl font-semibold inline-block text-center">Inquire About Services</a>
+            </div>
+        </section>
+        <!-- End New Section: Our Services -->
+
+         <!-- Combined Section: Why Choose Us & Our Location -->
+        <section id="contact-us-section" class="max-w-7xl mx-auto px-4 py-8 bg-white shadow-lg rounded-xl flex flex-col md:flex-row gap-8" data-aos="fade-up" data-aos-duration="1000">
+            <!-- Why Choose Us (Left Column) -->
+            <div class="flex-1 text-center md:text-left">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center"><span class="border-b-2 border-[#3c0008] pb-2">Why Choose US</span> </h2>
+                <div class="grid grid-cols-2 md:grid-cols-2 gap-8 justify-items-center">
+                    <!-- Statistic 1: Work Done -->
+                    <div class="flex flex-col items-center text-center p-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="text-[#7E252C] text-4xl mb-3">
+                            <i class="fa-solid fa-house-chimney"></i> <!-- Icon for work done/projects -->
+                        </div>
+                        <p class="text-4xl font-bold text-gray-800 mb-1">720+</p>
+                        <p class="text-gray-700 text-sm">Work Have Done</p>
+                    </div>
+                    <!-- Statistic 2: Years of Experience -->
+                    <div class="flex flex-col items-center text-center p-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="text-[#7E252C] text-4xl mb-3">
+                            <i class="fa-solid fa-rocket"></i> <!-- Icon for experience/growth -->
+                        </div>
+                        <p class="text-4xl font-bold text-gray-800 mb-1">10</p>
+                        <p class="text-gray-700 text-sm">Years of Experience</p>
+                    </div>
+                    <!-- Statistic 3: Reach Countries -->
+                    <div class="flex flex-col items-center text-center p-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="text-[#7E252C] text-4xl mb-3">
+                            <i class="fa-solid fa-earth-americas"></i> <!-- Icon for global reach -->
+                        </div>
+                        <p class="text-4xl font-bold text-gray-800 mb-1">35</p>
+                        <p class="text-gray-700 text-sm">Reach Countries</p>
+                    </div>
+                    <!-- Statistic 4: Rated by Clients -->
+                    <div class="flex flex-col items-center text-center p-4" data-aos="fade-up" data-aos-delay="400">
+                        <div class="text-[#7E252C] text-4xl mb-3">
+                            <i class="fa-solid fa-star"></i> <!-- Icon for ratings -->
+                        </div>
+                        <p class="text-4xl font-bold text-gray-800 mb-1">4.9</p>
+                        <p class="text-gray-700 text-sm">Rated by Clients</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Our Location (Right Column) -->
+            <div class="flex-1 text-center md:text-left">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-4 text-center"><span class="border-b-2 border-[#3c0008] pb-2">Contact Us / ទីតាំងគម្រោង</span></h2>
+                <p class="text-gray-700 mb-6">Find us easily on the map. Our project is strategically located for your convenience.</p>
+                <div class="map-container">
+                    <!-- Replace the src with your actual Google Maps embed iframe code -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3909.613864340523!2d104.85615751049326!3d11.507753245231775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109518124b3895b%3A0xaa92d9552d0aa78e!2sTH%20Residence%20Dangkoa%20I!5e0!3m2!1sen!2skh!4v1752113565757!5m2!1sen!2skh" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <p class="mt-4 text-gray-600 text-sm">Project DongKoa I, Phnom Penh, Cambodia</p>
+            </div>
+        </section>
+        <!-- End New Section: Our Location -->
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center md:text-left">
+            
+            <div data-aos="fade-up" data-aos-duration="1000">
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">About TH Residence</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                    TH Residence is committed to delivering high-quality, modern living and business spaces in prime locations across Phnom Penh. We focus on innovative design, sustainable practices, and exceptional customer service.
+                </p>
+            </div>
+
+            <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">Contact Us</h3>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-center md:justify-start justify-center">
+                        <i class="fa-solid fa-phone text-gray-400 mr-3"></i> 
+                        <a href="tel:+85512345678" class="text-gray-300 hover:text-white transition duration-300"> +855 12 345 678</a>
+                    </li>
+                    <li class="flex items-center md:justify-start justify-center">
+                        <i class="fa-solid fa-envelope text-gray-400 mr-3"></i> 
+                        <a href="mailto:info@thresidence.com" class="text-gray-300 hover:text-white transition duration-300">thresidence.socialmedia@gmail.com</a>
+                    </li>
+                    <li class="flex items-start md:justify-start justify-center">
+                        <i class="fa-solid fa-location-dot text-gray-400 mr-3 mt-1"></i> 
+                        <span class="text-gray-300">Project DongKoa I, Phnom Penh, Cambodia</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">Useful Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="./" class="footer-link">Home page</a></li>
+                    <li><a href="./#properties-section" class="footer-link">Properties</a></li>
+                    <li><a href="#services-section" class="footer-link">Our Services</a></li>
+                    <li><a href="#why-choose-us-section" class="footer-link">Why Choose Us</a></li>
+                    <li><a href="#about-us-section" class="footer-link">About Us</a></li>
+                </ul>
+            </div>
+
+            <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4">Newsletter</h3>
+                <p class="text-gray-300 text-sm mb-4">Subscribe to our newsletter for the latest updates and offers.</p>
+                <form class="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
+                    <input type="email" placeholder="Your email address" class="flex-grow p-2 rounded-md bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-1 focus:ring-[#7E252C]">
+                    <button type="submit" class="bg-[#7E252C] text-white p-2 rounded-md hover:bg-red-800 transition duration-300 ease-in-out">Subscribe</button>
+                </form>
+                
+                <h3 class="text-xl font-bold text-[#7E252C] mb-4 mt-8">Follow Us</h3>
+                <div class="flex justify-center md:justify-start space-x-6">
+                    <a href="https://www.facebook.com/THresidences" target="_blank" aria-label="Facebook" class="social-icon text-3xl">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="https://t.me/THResidence" target="_blank" aria-label="Telegram" class="social-icon text-3xl">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                    <a href="https://www.instagram.com/thresidences/" target="_blank" aria-label="Instagram" class="social-icon text-3xl">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+            &copy; <span id="current-year"></span> TH Residence. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Determine the base path for GitHub Pages
+        const pathSegments = window.location.pathname.split('/');
+        const basename = pathSegments.length > 1 && pathSegments[1] === 'th-residence-website' ? '/th-residence-website/' : '/';
+      
+        // JavaScript for mobile menu toggle and slide-in/out
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        function openMobileMenu() {
+            mobileMenu.classList.remove('translate-x-full'); // Slide in from right (CHANGED)
+            menuOverlay.classList.remove('hidden'); // Show overlay
+            // Optional: Prevent scrolling on body when menu is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add('translate-x-full'); // Slide out to right (CHANGED)
+            menuOverlay.classList.add('hidden'); // Hide overlay
+            // Optional: Re-enable scrolling on body
+            document.body.style.overflow = '';
+        }
+
+        // Open menu when hamburger button is clicked
+        mobileMenuButton.addEventListener('click', openMobileMenu);
+
+        // Close menu when close button is clicked
+        closeMenuButton.addEventListener('click', closeMobileMenu);
+
+        // Close menu when overlay is clicked
+        menuOverlay.addEventListener('click', closeMobileMenu);
+
+        // Close menu if window is resized to desktop size
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 750) { // Tailwind's 'md' breakpoint
+                closeMobileMenu();
+            }
+        });
+
+        // Optional: Close menu when a navigation link is clicked (if it navigates)
+        const mobileNavLinks = mobileMenu.querySelectorAll('a');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        });
+    
+
+        // Function to update relative paths
+        function updateRelativePaths(selector, attribute) {
+            document.querySelectorAll(selector).forEach(element => {
+                let currentPath = element.getAttribute(attribute);
+                if (currentPath && !currentPath.startsWith('http') && !currentPath.startsWith('/') && !currentPath.startsWith('#')) {
+                    element.setAttribute(attribute, basename + currentPath);
+                } else if (currentPath && currentPath.startsWith('./')) {
+                    // Handle relative paths like "./" for navigation
+                    const cleanedPath = currentPath.substring(2); // Remove "./"
+                    if (cleanedPath === "") { // If it was just "./"
+                        element.setAttribute(attribute, basename);
+                    } else {
+                        element.setAttribute(attribute, basename + cleanedPath);
+                    }
+                }
+            });
+        }
+
+        // Apply path updates to various elements
+        updateRelativePaths('link[rel="stylesheet"]', 'href'); // For CSS files
+        updateRelativePaths('img', 'src'); // For image sources
+        updateRelativePaths('a', 'href'); // For anchor links
+
+        // Initialize AOS
+        AOS.init({
+            once: false // animations happen every time on scroll
+        });
+
+        // Dynamically set the current year in the footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Main Header Image Carousel Logic
+        function initCarousel(carouselId, originalImagePaths, intervalTime = 5000) {
+            const carouselContainer = document.getElementById(carouselId);
+            const carouselInner = carouselContainer.querySelector('.carousel-inner');
+            const prevButton = carouselContainer.querySelector('.carousel-nav-button.left');
+            const nextButton = carouselContainer.querySelector('.carousel-nav-button.right');
+            const indicatorsContainer = carouselContainer.querySelector('.carousel-indicators');
+
+            // Create a new array with cloned first and last images for infinite loop effect
+            const imagePaths = [
+                originalImagePaths[originalImagePaths.length - 1], // Clone of last image
+                ...originalImagePaths,
+                originalImagePaths[0] // Clone of first image
+            ];
+
+            let slideIndex = 1; // Start at the first 'real' image (index 1 in the new array)
+            let autoSlideInterval;
+            let isTransitioning = false; // Flag to prevent rapid clicks during transition
+
+            // Clear existing content
+            carouselInner.innerHTML = '';
+            indicatorsContainer.innerHTML = '';
+
+            // Create slides and indicators
+            imagePaths.forEach((path, index) => {
+                const slideDiv = document.createElement('div');
+                slideDiv.classList.add('carousel-slide');
+                const img = document.createElement('img');
+                img.src = path;
+                img.alt = `Carousel Image ${index + 1}`;
+                slideDiv.appendChild(img);
+                carouselInner.appendChild(slideDiv);
+
+                // Create dots only for original images
+                if (index > 0 && index <= originalImagePaths.length) {
+                    const dotSpan = document.createElement('span');
+                    dotSpan.classList.add('dot');
+                    // Map dot click to original image index
+                    dotSpan.addEventListener('click', () => currentSlide(index));
+                    indicatorsContainer.appendChild(dotSpan);
+                }
+            });
+
+            const slides = carouselInner.querySelectorAll('.carousel-slide');
+            const dots = indicatorsContainer.querySelectorAll('.dot');
+
+            // Function to show a specific slide
+            function showSlides(n, smoothTransition = true) {
+                if (isTransitioning && smoothTransition) return; // Prevent new transition if one is active
+
+                isTransitioning = true;
+                carouselInner.style.transition = smoothTransition ? 'transform 0.5s ease-in-out' : 'none';
+
+                // Update slideIndex
+                slideIndex = n;
+
+                // Apply transform for sliding effect
+                carouselInner.style.transform = `translateX(-${slideIndex * 100}%)`;
+
+                // Update active dot (map back to original image index)
+                dots.forEach((dot, i) => {
+                    dot.classList.remove('active');
+                    if (slideIndex === i + 1) { // +1 because dots correspond to original images (index 0 to length-1)
+                        dot.classList.add('active');
+                    }
+                });
+
+                // Handle infinite loop teleport after transition
+                if (smoothTransition) {
+                    carouselInner.addEventListener('transitionend', handleTransitionEnd, { once: true });
+                } else {
+                    isTransitioning = false; // Reset immediately if no transition
+                }
+            }
+
+            // Handles the "teleport" after a smooth transition to a cloned slide
+            function handleTransitionEnd() {
+                isTransitioning = false;
+                if (slideIndex === 0) { // If we slid to the cloned last image
+                    showSlides(originalImagePaths.length, false); // Instantly jump to the real last image
+                } else if (slideIndex === originalImagePaths.length + 1) { // If we slid to the cloned first image
+                    showSlides(1, false); // Instantly jump to the real first image
+                }
+            }
+
+            // Function to move to the next or previous slide
+            function plusSlides(n) {
+                stopAutoSlide(); // Stop auto-slide on manual interaction
+                showSlides(slideIndex + n);
+                startAutoSlide(); // Restart auto-slide after a short delay
+            }
+
+            // Function to go to a specific slide (from dot indicators)
+            function currentSlide(n) {
+                stopAutoSlide(); // Stop auto-slide on manual interaction
+                // n here is the original index (0 to length-1), so map to new array index (1 to length)
+                showSlides(n + 1); 
+                startAutoSlide(); // Restart auto-slide after a short delay
+            }
+
+            // Function to start the automatic slideshow
+            function startAutoSlide() {
+                stopAutoSlide(); // Clear any existing interval first
+                autoSlideInterval = setInterval(() => {
+                    plusSlides(1);
+                }, intervalTime);
+            }
+
+            // Function to stop the automatic slideshow
+            function stopAutoSlide() {
+                clearInterval(autoSlideInterval);
+            }
+
+            // Event Listeners for navigation buttons
+            prevButton.addEventListener('click', () => plusSlides(-1));
+            nextButton.addEventListener('click', () => plusSlides(1));
+
+            // Pause/Resume on hover
+            carouselContainer.addEventListener('mouseenter', stopAutoSlide);
+            carouselContainer.addEventListener('mouseleave', startAutoSlide);
+
+            // Initial display of the first slide and start auto-play
+            showSlides(slideIndex, false); // Show initial slide without transition
+            startAutoSlide();
+        }
+
+        // Initialize the main image carousel
+        // To add more images, simply add their paths to this array!
+        const mainCarouselImages = [
+            "Image/MASTER PLAN.jpg",
+            "Image/SHOPHOUSE_EVENING_VIEW022.jpg",
+            "Image/LINK HOUSE_EVENING_VIEW055.jpg",
+            // Add more image paths here:
+        ];
+        initCarousel('main-image-carousel', mainCarouselImages);
+
+
+        // JavaScript for active navigation link highlighting
+        const navLinks = document.querySelectorAll('.desktop-nav-links a');
+        const sections = document.querySelectorAll('main section[id]');
+
+        function highlightActiveLink() {
+            let currentActiveSectionId = '';
+            const headerHeight = document.getElementById('main-header').offsetHeight;
+
+            // Check for "Home" section first (if near the top of the page)
+            if (window.scrollY <= headerHeight + 50) { // Add a small buffer
+                currentActiveSectionId = 'main-content'; 
+            } else {
+                // Check other sections
+                sections.forEach(section => {
+                    // Get the section's position relative to the top of the document, adjusted for header height
+                    const sectionTop = section.offsetTop - headerHeight - 1; // Subtract 1px buffer
+                    const sectionBottom = sectionTop + section.offsetHeight;
+
+                    // If the current scroll position is within the section's bounds
+                    if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                        currentActiveSectionId = section.id;
+                    }
+                });
+            }
+
+            // Apply/remove active class based on the current active section
+            navLinks.forEach(link => {
+                link.classList.remove('active-nav-link');
+                let linkTargetId = link.getAttribute('href').substring(1); // Remove '#' from href
+
+                if (linkTargetId === currentActiveSectionId) {
+                    link.classList.add('active-nav-link');
+                }
+            });
+        }
+
+        // Initial highlight on page load
+        window.addEventListener('DOMContentLoaded', highlightActiveLink);
+        // Highlight on scroll
+        window.addEventListener('scroll', highlightActiveLink);
+
+        // Handle clicks for immediate highlighting and smooth scroll
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent default jump
+
+                // Remove active class from all and add to clicked one immediately
+                navLinks.forEach(l => l.classList.remove('active-nav-link'));
+                this.classList.add('active-nav-link');
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    const headerOffset = document.getElementById('main-header').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                    const offsetPosition = elementPosition - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

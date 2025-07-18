@@ -217,11 +217,11 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
-     <header class="bg-white shadow-md p-4 w-full fixed top-0 left-0 z-50">
-        <div class="max-w-7xl mx-auto flex items-center justify-between md:flex-row">
+     <header id="main-header" class="bg-white shadow-md p-4 w-full fixed top-0 left-0 z-50">
+        <div class="w-full flex items-center justify-between md:flex-row px-4">
             <div class="text-2xl font-bold text-gray-800 flex items-center">
                 <!-- Placeholder for Company Logo -->
-                <img src="Image/profile.jpg" alt="Company Logo" class="w-8 h-8 rounded-full object-cover mr-2">
+                <img src="Image/profile.jpg" alt="Company Logo" class="w-10 h-10 rounded-full object-cover mr-2">
                 <a href="./" class="hover:text-[#7E252C] transition duration-300 ease-in-out"> TH RESIDENCE </a>
             </div>
 
@@ -233,12 +233,12 @@
             </button>
 
             <!-- Desktop Navigation Links -->
-            <div class="hidden md:flex space-x-8">
-                <a href="#" class="text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out">Home</a>
-                <a href="#" class="text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out">About</a>
-                <a href="#" class="text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out">Services</a>
-                <a href="#" class="text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out">Portfolio</a>
-                <a href="#" class="text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out">Contact</a>
+            <div class="hidden md:flex space-x-8"> 
+                <a href="Home_Page.html#main-content" class="text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out">Home</a>
+                <a href="Home_Page.html#services-section" class="text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out">Services</a>
+                <a href="Home_Page.html#properties-section" class="text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out">Properties</a>
+                <a href="Home_Page.html#contact-us-section" class="text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out">Contact</a>
+                <a href="Home_Page.html#about-us-section" class="text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out">About US</a>
             </div>
         </nav>
 
@@ -252,16 +252,15 @@
                 </button>
             </div>
             <nav class="space-y-4">
-                <a href="#" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Home</a>
-                <a href="#" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">About</a>
-                <a href="#" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Services</a>
-                <a href="#" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Portfolio</a>
-                <a href="#" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Contact</a>
+                <a href="Home_Page.html#main-content" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Home</a>
+                <a href="Home_Page.html#about-us-section" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">About US</a>
+                <a href="Home_Page.html#services-section" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Services</a>
+                <a href="Home_Page.html#properties-section" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Properties</a>
+                <a href="Home_Page.html#contact-us-section" class="block text-lg font-medium hover:text-[#7E252C] transition duration-300 ease-in-out py-2">Contact</a>
             </nav>
         </div>
            <div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
     </header>
-
 
     <main class="flex-grow w-full py-8 bg-gray-100">
         <div class="max-w-7xl mx-auto px-4">
@@ -374,7 +373,7 @@
     </main>
 
     <div class="fixed bottom-4 right-4 z-40">
-        <a href="https://momento360.com/e/uc/639996f7f2e4447eafd18d52c7c0d07e?utm_campaign=embed&utm_source=other&size=medium&display-plan=true" target="_blank" class="bg-[#7E252C] text-white py-3 px-6 rounded-full shadow-lg hover:bg-red-800 transition duration-300 ease-in-out text-xl font-semibold flex items-center justify-center">
+        <a href="https://momento360.com/e/uc/64e75d37edf947958f7f1a6f79179cbe?utm_campaign=embed&utm_source=other&size=medium&display-plan=true" target="_blank" class="bg-[#7E252C] text-white py-3 px-6 rounded-full shadow-lg hover:bg-red-800 transition duration-300 ease-in-out text-xl font-semibold flex items-center justify-center">
             <i class="fa-solid fa-cube mr-2"></i> View 3D
         </a>
     </div>
@@ -415,9 +414,9 @@
             <div>
                 <h3 class="text-xl font-bold text-[#7E252C] mb-4">Useful Links</h3>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="index.html" class="footer-link">Home page</a></li>
-                    <li><a href="index.html#properties-section" class="footer-link">Properties</a></li>
-                    <li><a href="index.html#about-us-section" class="footer-link">About Us</a></li>
+                    <li><a href="Home_Page.html" class="footer-link">Home page</a></li>
+                    <li><a href="Home_Page.html" class="footer-link">Properties</a></li>
+                    <li><a href="Home_Page.html#about-us-section" class="footer-link">About Us</a></li>
                     <li><a href="#" class="footer-link">Privacy Policy</a></li>
                     <li><a href="#" class="footer-link">Terms of Service</a></li>
                     <li><a href="#" class="footer-link">FAQ</a></li>

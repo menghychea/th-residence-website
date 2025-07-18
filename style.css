@@ -1,7 +1,7 @@
 /* style.css */
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'avenir', sans-serif;
     background-color: #f3f4f6; /* Fallback background color */
     padding-top: 64px; /* Adjust this value if header height changes */
     position: relative;
@@ -27,15 +27,6 @@ body::before {
     z-index: -1;
 }
 
-/* Hide scrollbar for a cleaner look, but still allow scrolling */
-.hide-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-.hide-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
-
 /* Styles for the main header image carousel container */
 .header-carousel-container {
     position: relative;
@@ -56,28 +47,6 @@ body::before {
 }
 
 
-/* Keyframe animation for subtle zoom */
-@keyframes subtleZoom {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.03); /* Zoom in slightly */
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Styles for the clear image layer */
-.header-carousel-slide img { /* Targeting img directly inside .header-carousel-slide */
-    width: 100%; /* Make image take full width of its slide container */
-    height: 100%; /* Make image take full height of its slide container */
-    object-fit: cover; /* Image will cover the entire area, potentially cropping */
-    transition: opacity 1000ms ease-in-out; /* Keep fade transition */
-    /* Apply the animation here */
-    animation: subtleZoom 8s infinite alternate ease-in-out; /* 8s duration, infinite, alternates direction */
-}
 
 /* Added a class for the specific min-width of the cards in the horizontal scroll */
 .card-min-width {
@@ -107,7 +76,7 @@ body::before {
 }
 .social-icon:hover {
     transform: scale(1.1); /* Subtle hover effect */
-    color: #7E252C; /* Hover color to brand red */
+    color: #3c0008; /* Hover color to brand red */
 }
 
 /* Footer links */
@@ -137,4 +106,239 @@ body::before {
             border: 0;
         }
 
-        
+        /* Define custom fonts and animations */
+        body {
+            font-family: 'Inter', 'Kantumruy Pro', sans-serif;
+            /* Padding for the fixed header */
+            padding-top: 72px; /* Height of your fixed header */
+            scroll-padding-top: 72px; /* For smooth scrolling to sections */
+        }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-khmer { font-family: 'Kantumruy Pro', sans-serif; }
+
+        /* Initial state for header elements when loading from splash */
+        .header-logo-initial {
+            /* These values should match the final state of the logo on the welcome page */
+            /* We're essentially "resetting" them to appear as if they smoothly continued */
+            opacity: 0; /* Start invisible */
+            transform: scale(0.5); /* Start smaller than final size */
+            transition: opacity 1s ease-out, transform 1s ease-out; /* Smooth transition */
+        }
+        .header-text-initial {
+            opacity: 0; /* Start invisible */
+            transform: translateX(-20px); /* Start slightly to the left */
+            transition: opacity 1s ease-out, transform 1s ease-out; /* Smooth transition */
+        }
+
+        /* Final state for header elements */
+        .header-logo-final {
+            opacity: 1; 
+            transform: scale(1); 
+        }
+        .header-text-final {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Initial state for the entire header when coming from splash */
+        .header-hidden {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Carousel specific styles */
+        .carousel-container {
+            position: relative; /* Allows it to flow in the document and be scrolled */
+            width: 100vw; /* Full viewport width */
+            height: calc(100vh - 72px); /* Full viewport height minus header height */
+            overflow: hidden;
+        }
+
+        .carousel-inner {
+            display: flex;
+            width: 100%; /* Will be overridden by JS for total width */
+            height: 100%;
+            transition: transform 0.5s ease-in-out; /* Smooth slide transition */
+        }
+
+        .carousel-slide {
+            flex-shrink: 0; /* Prevent slides from shrinking */
+            width: 100%; /* Each slide takes full width of the container */
+            height: 100%;
+            position: relative; /* Needed for absolute positioning of overlay */
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures images cover the area without distortion */
+        }
+
+         /* Dark overlay for carousel images */
+        .carousel-slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay with 50% opacity (increased from 40%) */
+            z-index: 1; /* Below text, above image */
+        }
+
+        .carousel-nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 1rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            z-index: 10; /* Higher than carousel container, lower than header */
+            font-size: 1.5rem;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-nav-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-nav-button.left {
+            left: 1rem;
+        }
+
+        .carousel-nav-button.right {
+            right: 1rem;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10; /* Higher than carousel container, lower than header */
+        }
+
+        .dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #7E252C; /* Active dot color */
+        }
+
+        /* Styles for fixed text on carousel (top-left) */
+        .carousel-text-overlay {
+            position: absolute;
+            top: 10%; /* Position from the top */
+            left: 5%; /* Position from the left */
+            transform: none; /* Removed transform to align directly */
+            text-align: left; /* Align text to the left */
+            color: white;
+            z-index: 15; /* Higher than buttons and indicators */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add shadow for readability */
+            padding: 1rem;
+            max-width: 80%; /* Limit width on smaller screens */
+        }
+
+        .carousel-text-overlay h1 {
+            font-size: 3rem; /* Adjust as needed */
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .carousel-text-overlay p {
+            font-size: 1.25rem; /* Adjust as needed */
+        }
+
+       
+        /* Styles for fixed secondary text on carousel (bottom-right) */
+        .carousel-secondary-text-overlay {
+            position: absolute;
+            bottom: 10%; /* Position from the bottom */
+            right: 5%; /* Position from the right */
+            transform: none; /* Removed transform to align directly */
+            text-align: right; /* Align text to the right */
+            color: white;
+            z-index: 15; /* Higher than buttons and indicators */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add shadow for readability */
+            padding: 1rem;
+            max-width: 80%; /* Limit width on smaller screens */
+        }
+
+        .carousel-secondary-text-overlay h2 {
+            font-size: 2rem; /* Adjust as needed */
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .carousel-secondary-text-overlay p {
+            font-size: 1rem; /* Adjust as needed */
+        }
+
+        /* Responsive adjustments for text overlays */
+        @media (max-width: 768px) {
+            .carousel-text-overlay {
+                top: 8%; /* Adjust top for smaller screens */
+                left: 5%; /* Keep left for consistency */
+                padding: 0.5rem;
+            }
+            .carousel-text-overlay h1 {
+                font-size: 2rem;
+            }
+            .carousel-text-overlay p {
+                font-size: 1rem;
+            }
+
+            .carousel-secondary-text-overlay {
+                bottom: 8%; /* Adjust bottom for smaller screens */
+                right: 5%; /* Keep right for consistency */
+                padding: 0.5rem;
+            }
+            .carousel-secondary-text-overlay h2 {
+                font-size: 1.5rem;
+            }
+            .carousel-secondary-text-overlay p {
+                font-size: 0.875rem; /* Smaller text on mobile */
+            }
+        }
+
+        /* Active navigation link styling */
+        .active-nav-link {
+            text-decoration: underline;
+            text-underline-offset: 4px; /* Space between text and underline */
+            color: #7E252C; /* Active color */
+        }
+
+        /* Styles for icon/text toggle in navigation */
+        .nav-link-item .nav-text {
+            display: none; /* Text hidden by default */
+        }
+        .nav-link-item .nav-icon {
+            display: inline-block; /* Icon visible by default */
+        }
+
+        /* When the link is active, hide the icon and show the text */
+        .nav-link-item.active-nav-link .nav-icon {
+            display: none;
+        }
+        .nav-link-item.active-nav-link .nav-text {
+            display: inline-block;
+        }
+
+        /* New: When hovering over the link, hide the icon and show the text */
+        .nav-link-item:hover .nav-icon {
+            display: none;
+        }
+        .nav-link-item:hover .nav-text {
+            display: inline-block;
+        }
